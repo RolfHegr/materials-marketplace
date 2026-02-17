@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Materials Marketplace — Style 5</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'IBM Plex Sans',sans-serif; background:#fafafa; color:#222; display:flex; min-height:100vh; }
+  .sidebar { width:220px; background:#fafafa; padding:32px 16px; flex-shrink:0; border-right:2px solid #222; }
+  .sidebar h2 { font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:2px; text-transform:uppercase; margin-bottom:24px; font-weight:400; }
+  .sidebar a { display:block; color:#555; text-decoration:none; padding:6px 10px; font-size:13px; font-family:'IBM Plex Mono',monospace; }
+  .sidebar a:hover, .sidebar a.active { color:#222; text-decoration:underline; }
+  .main { flex:1; padding:40px 48px; }
+  h1 { font-weight:300; font-size:20px; letter-spacing:4px; text-transform:uppercase; margin-bottom:4px; }
+  .subtitle { color:#888; font-size:12px; font-family:'IBM Plex Mono',monospace; margin-bottom:32px; }
+  .filters { display:flex; gap:12px; margin-bottom:24px; flex-wrap:wrap; padding-bottom:20px; border-bottom:2px solid #222; }
+  .filters input, .filters select { padding:6px 10px; border:1px solid #ccc; font-size:13px; background:#fff; font-family:'IBM Plex Mono',monospace; }
+  .filters input:focus, .filters select:focus { outline:none; border-color:#222; }
+  #search { width:200px; }
+  table { width:100%; border-collapse:collapse; }
+  thead th { text-align:left; font-family:'IBM Plex Mono',monospace; font-size:10px; text-transform:uppercase; letter-spacing:1.5px; color:#888; padding:8px 12px; border-bottom:2px solid #222; font-weight:400; }
+  tbody td { padding:12px; border-bottom:1px solid #eee; font-size:14px; vertical-align:middle; }
+  tbody tr:hover { background:#f5f5f3; }
+  .swatch-sm { width:20px; height:20px; border-radius:2px; display:inline-block; border:1px solid #ddd; vertical-align:middle; }
+  .type-tag { font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; }
+  .price-cell { font-weight:600; font-size:15px; }
+  .no-results { color:#888; padding:20px; }
+</style>
+</head>
+<body>
+<nav class="sidebar">
+  <h2>Marketplace</h2>
+  <a href="/1">01 Minimal</a>
+  <a href="/2">02 Dark</a>
+  <a href="/3">03 Warm</a>
+  <a href="/4">04 Grid</a>
+  <a href="/5" class="active">05 Compact</a>
+</nav>
+<main class="main">
+  <h1>Materials</h1>
+  <p class="subtitle">// specification database</p>
+  <div class="filters">
+    <input type="text" id="search" placeholder="search…" oninput="update()">
+    <select id="category" onchange="update()"><option value="all">all types</option><option value="wall">wall</option><option value="floor">floor</option><option value="ceiling">ceiling</option></select>
+    <input type="number" id="minPrice" placeholder="min €" oninput="update()" style="width:80px">
+    <input type="number" id="maxPrice" placeholder="max €" oninput="update()" style="width:80px">
+  </div>
+  <table>
+    <thead><tr><th>Material</th><th>Type</th><th>Color</th><th>CO₂ kg/m²</th><th>Fire</th><th>Price</th></tr></thead>
+    <tbody id="cards"></tbody>
+  </table>
+</main>
+<script src="/data.js"></script>
+<script>
+function cardHTML(m) {
+  return `<tr>
+    <td><strong>${m.name}</strong></td>
+    <td><span class="type-tag">${m.type}</span></td>
+    <td><span class="swatch-sm" style="background:${m.color}"></span></td>
+    <td>${m.co2}</td>
+    <td>${m.fire}</td>
+    <td class="price-cell">€${m.price}</td>
+  </tr>`;
+}
+function update() { renderCards('cards', filterMaterials(), cardHTML); }
+update();
+</script>
+</body>
+</html>
