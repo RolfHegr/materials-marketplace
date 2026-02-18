@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Materials Marketplace — Style 7: Horizontal Dropdowns</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'IBM Plex Sans',sans-serif;background:#fafafa;color:#222;min-height:100vh}
+  header{border-bottom:2px solid #222;padding:24px 40px 0}
+  header h1{font-weight:300;font-size:18px;letter-spacing:4px;text-transform:uppercase;margin-bottom:4px}
+  header .sub{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#888;margin-bottom:16px}
+  .nav-row{display:flex;gap:0;border-bottom:2px solid #222;margin:0 -40px;padding:0 40px}
+  .nav-row a{font-family:'IBM Plex Mono',monospace;font-size:11px;text-decoration:none;color:#888;padding:10px 14px;border-bottom:2px solid transparent;margin-bottom:-2px}
+  .nav-row a:hover,.nav-row a.active{color:#222;border-bottom-color:#222}
+  .filter-bar{display:flex;gap:0;border-bottom:1px solid #ddd;background:#fff;padding:0 40px;flex-wrap:wrap}
+  .filter-dropdown{position:relative}
+  .filter-btn{font-family:'IBM Plex Mono',monospace;font-size:12px;padding:12px 16px;background:none;border:none;border-right:1px solid #eee;cursor:pointer;display:flex;align-items:center;gap:6px;color:#555}
+  .filter-btn:hover,.filter-btn.open{background:#f5f5f3;color:#222}
+  .filter-btn .arrow{font-size:8px;transition:transform .2s}
+  .filter-btn.open .arrow{transform:rotate(180deg)}
+  .filter-btn .count-badge{background:#222;color:#fff;font-size:9px;padding:1px 5px;border-radius:8px;margin-left:4px}
+  .dropdown-panel{position:absolute;top:100%;left:0;background:#fff;border:1px solid #ddd;min-width:220px;padding:16px;z-index:100;display:none;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+  .dropdown-panel.show{display:block}
+  .dropdown-panel h4{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-bottom:10px;font-weight:400}
+  .dropdown-panel label{display:flex;align-items:center;gap:8px;font-size:12px;padding:4px 0;cursor:pointer;color:#555}
+  .dropdown-panel label:hover{color:#222}
+  .dropdown-panel input[type=checkbox]{accent-color:#222}
+  .dropdown-panel .apply-btn{margin-top:12px;width:100%;padding:8px;background:#222;color:#fff;border:none;font-family:'IBM Plex Mono',monospace;font-size:11px;cursor:pointer;text-transform:uppercase;letter-spacing:1px}
+  .range-row{display:flex;align-items:center;gap:8px;font-size:12px}
+  .range-row input[type=range]{flex:1;accent-color:#222}
+  .range-row .val{font-family:'IBM Plex Mono',monospace;font-size:11px;min-width:60px;text-align:right}
+  .active-bar{padding:10px 40px;background:#fafafa;display:flex;gap:8px;flex-wrap:wrap;align-items:center;min-height:40px}
+  .active-bar .label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px}
+  .active-pill{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 10px;border:1px solid #222;display:inline-flex;align-items:center;gap:6px}
+  .active-pill .x{cursor:pointer;font-weight:600}
+  .clear-all{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#888;text-decoration:underline;cursor:pointer;margin-left:auto}
+  main{padding:24px 40px}
+  .result-count{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#888;margin-bottom:16px}
+  table{width:100%;border-collapse:collapse}
+  thead th{text-align:left;font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#888;padding:8px 12px;border-bottom:2px solid #222;font-weight:400}
+  tbody td{padding:10px 12px;border-bottom:1px solid #eee;font-size:13px;vertical-align:middle}
+  tbody tr:hover{background:#f5f5f3}
+  .swatch-sm{width:18px;height:18px;border-radius:2px;display:inline-block;border:1px solid #ddd;vertical-align:middle}
+  .type-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+  .cert-tags{display:flex;gap:4px}
+  .cert-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 6px;border:1px solid #ccc;letter-spacing:.5px}
+  .price-cell{font-weight:600}
+  .finish-tag{font-size:11px;color:#888}
+  .no-results{color:#888;padding:20px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Materials</h1>
+  <div class="sub">// architect specification database</div>
+  <div class="nav-row">
+    <a href="/1">01</a><a href="/2">02</a><a href="/3">03</a><a href="/4">04</a><a href="/5">05</a>
+    <a href="/6">06</a><a href="/7" class="active">07</a><a href="/8">08</a><a href="/9">09</a><a href="/10">10</a>
+  </div>
+</header>
+
+<div class="filter-bar" id="filterBar">
+  <div class="filter-dropdown" data-key="type">
+    <button class="filter-btn" onclick="toggleDropdown(this)">Type <span class="arrow">▼</span></button>
+    <div class="dropdown-panel" id="dd-type"></div>
+  </div>
+  <div class="filter-dropdown" data-key="fire">
+    <button class="filter-btn" onclick="toggleDropdown(this)">Fire Class <span class="arrow">▼</span></button>
+    <div class="dropdown-panel" id="dd-fire"></div>
+  </div>
+  <div class="filter-dropdown" data-key="finish">
+    <button class="filter-btn" onclick="toggleDropdown(this)">Finish <span class="arrow">▼</span></button>
+    <div class="dropdown-panel" id="dd-finish"></div>
+  </div>
+  <div class="filter-dropdown" data-key="cert">
+    <button class="filter-btn" onclick="toggleDropdown(this)">Certification <span class="arrow">▼</span></button>
+    <div class="dropdown-panel" id="dd-cert"></div>
+  </div>
+  <div class="filter-dropdown" data-key="brand">
+    <button class="filter-btn" onclick="toggleDropdown(this)">Brand <span class="arrow">▼</span></button>
+    <div class="dropdown-panel" id="dd-brand"></div>
+  </div>
+  <div class="filter-dropdown" data-key="co2">
+    <button class="filter-btn" onclick="toggleDropdown(this)">CO₂ <span class="arrow">▼</span></button>
+    <div class="dropdown-panel" id="dd-co2">
+      <h4>Max CO₂ emissions</h4>
+      <div class="range-row"><input type="range" id="co2Slider" min="0" max="20" step="0.5" value="20" oninput="render()"><span class="val" id="co2Val">≤20</span></div>
+    </div>
+  </div>
+  <div class="filter-dropdown" data-key="price">
+    <button class="filter-btn" onclick="toggleDropdown(this)">Price <span class="arrow">▼</span></button>
+    <div class="dropdown-panel" id="dd-price">
+      <h4>Max price</h4>
+      <div class="range-row"><input type="range" id="priceSlider" min="0" max="350" step="5" value="350" oninput="render()"><span class="val" id="priceVal">≤€350</span></div>
+    </div>
+  </div>
+  <div class="filter-dropdown" data-key="use">
+    <button class="filter-btn" onclick="toggleDropdown(this)">Use <span class="arrow">▼</span></button>
+    <div class="dropdown-panel" id="dd-use"></div>
+  </div>
+</div>
+
+<div class="active-bar" id="activeBar">
+  <span class="label">Active:</span>
+  <span id="activePills"></span>
+  <span class="clear-all" onclick="clearAll()">Clear all</span>
+</div>
+
+<main>
+  <div class="result-count" id="count"></div>
+  <table>
+    <thead><tr><th>Material</th><th>Type</th><th>Color</th><th>Finish</th><th>CO₂</th><th>Fire</th><th>Cert</th><th>Lead</th><th>Price</th></tr></thead>
+    <tbody id="cards"></tbody>
+  </table>
+</main>
+
+<script src="/data.js"></script>
+<script>
+const sel = { type:new Set(), fire:new Set(), finish:new Set(), cert:new Set(), brand:new Set(), use:new Set() };
+
+function buildCheckboxDropdown(id, items, key) {
+  const p = document.getElementById(id);
+  p.innerHTML = `<h4>${key}</h4>`;
+  items.forEach(v => {
+    const l = document.createElement('label');
+    l.innerHTML = `<input type="checkbox" value="${v}" onchange="sel['${key}'].has('${v}')?sel['${key}'].delete('${v}'):sel['${key}'].add('${v}');render()"> ${v}`;
+    p.appendChild(l);
+  });
+}
+
+buildCheckboxDropdown('dd-type', allTypes, 'type');
+buildCheckboxDropdown('dd-fire', allFire, 'fire');
+buildCheckboxDropdown('dd-finish', allFinish, 'finish');
+buildCheckboxDropdown('dd-cert', allCert, 'cert');
+buildCheckboxDropdown('dd-brand', allBrand, 'brand');
+buildCheckboxDropdown('dd-use', allUse, 'use');
+
+function toggleDropdown(btn) {
+  const panel = btn.nextElementSibling;
+  const wasOpen = panel.classList.contains('show');
+  document.querySelectorAll('.dropdown-panel').forEach(p=>p.classList.remove('show'));
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('open'));
+  if(!wasOpen){panel.classList.add('show');btn.classList.add('open')}
+}
+document.addEventListener('click', e => { if(!e.target.closest('.filter-dropdown')){document.querySelectorAll('.dropdown-panel').forEach(p=>p.classList.remove('show'));document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('open'))} });
+
+function render() {
+  const co2Max = parseFloat(document.getElementById('co2Slider').value);
+  const priceMax = parseFloat(document.getElementById('priceSlider').value);
+  document.getElementById('co2Val').textContent = '≤'+co2Max;
+  document.getElementById('priceVal').textContent = '≤€'+priceMax;
+
+  // Update badge counts
+  document.querySelectorAll('.filter-dropdown').forEach(dd => {
+    const key = dd.dataset.key;
+    const btn = dd.querySelector('.filter-btn');
+    btn.querySelector('.count-badge')?.remove();
+    const count = sel[key]?.size || 0;
+    if(count){const b=document.createElement('span');b.className='count-badge';b.textContent=count;btn.insertBefore(b,btn.querySelector('.arrow'))}
+  });
+
+  const filtered = materials.filter(m => {
+    if(sel.type.size && !sel.type.has(m.type)) return false;
+    if(sel.fire.size && !sel.fire.has(m.fire)) return false;
+    if(sel.finish.size && !sel.finish.has(m.finish)) return false;
+    if(sel.cert.size && !m.cert.some(c=>sel.cert.has(c))) return false;
+    if(sel.brand.size && !sel.brand.has(m.brand)) return false;
+    if(sel.use.size && !sel.use.has(m.use) && !(m.use==='both'&&(sel.use.has('indoor')||sel.use.has('outdoor')))) return false;
+    if(m.co2 > co2Max) return false;
+    if(m.price > priceMax) return false;
+    return true;
+  });
+
+  document.getElementById('count').textContent = `// ${filtered.length} results`;
+
+  // Active pills
+  let pills = '';
+  for(const [k,s] of Object.entries(sel)) s.forEach(v => pills+=`<span class="active-pill">${k}:${v} <span class="x" onclick="sel['${k}'].delete('${v}');document.querySelectorAll('#dd-${k} input').forEach(i=>{if(i.value==='${v}')i.checked=false});render()">×</span></span>`);
+  if(co2Max<20) pills+=`<span class="active-pill">co2≤${co2Max} <span class="x" onclick="document.getElementById('co2Slider').value=20;render()">×</span></span>`;
+  if(priceMax<350) pills+=`<span class="active-pill">price≤€${priceMax} <span class="x" onclick="document.getElementById('priceSlider').value=350;render()">×</span></span>`;
+  document.getElementById('activePills').innerHTML = pills;
+
+  renderCards('cards', filtered, m => `<tr>
+    <td><strong>${m.name}</strong><br><span style="font-size:11px;color:#888">${m.brand}</span></td>
+    <td><span class="type-tag">${m.type}</span></td>
+    <td><span class="swatch-sm" style="background:${m.color}"></span></td>
+    <td><span class="finish-tag">${m.finish}</span></td>
+    <td>${m.co2}</td>
+    <td>${m.fire}</td>
+    <td><div class="cert-tags">${m.cert.map(c=>`<span class="cert-tag">${c}</span>`).join('')}</div></td>
+    <td>${m.leadDays}d</td>
+    <td class="price-cell">€${m.price}</td>
+  </tr>`);
+}
+
+function clearAll(){ for(const s of Object.values(sel)) s.clear(); document.querySelectorAll('.dropdown-panel input[type=checkbox]').forEach(i=>i.checked=false); document.getElementById('co2Slider').value=20; document.getElementById('priceSlider').value=350; render(); }
+
+render();
+</script>
+</body>
+</html>

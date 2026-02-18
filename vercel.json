@@ -5,6 +5,11 @@
     { "source": "/3", "destination": "/3.html" },
     { "source": "/4", "destination": "/4.html" },
     { "source": "/5", "destination": "/5.html" },
+    { "source": "/6", "destination": "/6.html" },
+    { "source": "/7", "destination": "/7.html" },
+    { "source": "/8", "destination": "/8.html" },
+    { "source": "/9", "destination": "/9.html" },
+    { "source": "/10", "destination": "/10.html" },
     { "source": "/", "destination": "/1.html" }
   ]
 }
