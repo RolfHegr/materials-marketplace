@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Materials Marketplace — Favorites</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;background:#fafaf8;color:#1a1a1a}
+a{text-decoration:none;color:inherit}
+.top-nav{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:56px;background:#fff;border-bottom:1px solid #e8e8e6;position:sticky;top:0;z-index:100}
+.top-nav .logo{font-size:15px;font-weight:600;letter-spacing:-.5px}
+.top-nav .logo span{color:#999}
+.top-nav nav{display:flex;gap:32px}
+.top-nav nav a{font-size:13px;color:#888;transition:color .15s}
+.top-nav nav a:hover,.top-nav nav a.active{color:#1a1a1a}
+.top-nav .nav-right{display:flex;align-items:center;gap:20px}
+.top-nav .nav-right a{font-size:13px;color:#888}
+.mono{font-family:'IBM Plex Mono',monospace}
+.page-wrap{max-width:960px;margin:0 auto;padding:48px 24px}
+.page-wrap h1{font-size:22px;font-weight:500;margin-bottom:4px}
+.page-wrap .sub{font-size:12px;color:#999;margin-bottom:32px}
+.tabs{display:flex;gap:0;border-bottom:2px solid #e8e8e6;margin-bottom:32px}
+.tab{padding:10px 20px;font-size:12px;color:#999;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tab:hover{color:#1a1a1a}
+.tab.active{color:#1a1a1a;border-bottom-color:#1a1a1a}
+.fav-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.f-card{background:#fff;border:1px solid #e8e8e6;border-radius:8px;overflow:hidden;position:relative;transition:transform .12s}
+.f-card:hover{transform:translateY(-2px)}
+.f-swatch{height:72px}
+.f-body{padding:14px}
+.f-body h3{font-size:14px;font-weight:500;margin-bottom:2px}
+.f-body .fbrand{font-size:11px;color:#999;margin-bottom:6px}
+.f-body .fmeta{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}
+.f-body .fmeta span{font-size:9px;background:#f5f5f3;padding:2px 6px;border-radius:3px;color:#888}
+.f-body .ffoot{display:flex;justify-content:space-between;align-items:center}
+.f-body .fprice{font-size:16px;font-weight:600}
+.f-remove{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.5);color:#fff;border:none;border-radius:50%;width:24px;height:24px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.f-actions{display:flex;gap:6px}
+.btn-xs{padding:5px 12px;border:1px solid #ddd;border-radius:4px;font-size:10px;background:#fff;cursor:pointer;font-family:inherit}
+.btn-xs:hover{border-color:#1a1a1a}
+</style>
+</head>
+<body>
+<header class="top-nav">
+  <a href="/10-home" class="logo">materia<span>.io</span></a>
+  <nav>
+    <a href="/10-materials">Materials</a>
+    <a href="/10-compare">Compare</a>
+    <a href="/10-cart">Quotes</a>
+    <a href="/10-account" class="active">Account</a>
+  </nav>
+  <div class="nav-right"><a href="/10-favorites" style="color:#1a1a1a">♡</a><a href="/10-settings">Settings</a></div>
+</header>
+<div class="page-wrap">
+  <h1>Favorites</h1>
+  <p class="sub mono">6 saved materials</p>
+  <div class="tabs">
+    <a href="/10-account" class="tab">Profile</a>
+    <a href="/10-favorites" class="tab active">Favorites</a>
+    <a href="/10-orders" class="tab">Orders</a>
+    <a href="/10-settings" class="tab">Settings</a>
+  </div>
+  <div class="fav-grid" id="favs"></div>
+</div>
+<script src="/data.js"></script>
+<script>
+const favs = materials.slice(0,6);
+document.getElementById('favs').innerHTML=favs.map(m=>`
+  <div class="f-card">
+    <button class="f-remove" title="Remove">×</button>
+    <a href="/10-product"><div class="f-swatch" style="background:${m.color}"></div></a>
+    <div class="f-body">
+      <h3>${m.name}</h3>
+      <div class="fbrand">${m.brand}</div>
+      <div class="fmeta"><span>${m.type}</span><span>${m.fire}</span><span>CO₂ ${m.co2}</span></div>
+      <div class="ffoot">
+        <span class="fprice">€${m.price}</span>
+        <div class="f-actions">
+          <button class="btn-xs" onclick="window.location='/10-compare'">Compare</button>
+          <button class="btn-xs" onclick="alert('Added to quote')">Quote</button>
+        </div>
+      </div>
+    </div>
+  </div>
+`).join('');
+</script>
+</body>
+</html>

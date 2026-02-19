@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Materials Marketplace — Account</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;background:#fafaf8;color:#1a1a1a}
+a{text-decoration:none;color:inherit}
+.top-nav{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:56px;background:#fff;border-bottom:1px solid #e8e8e6;position:sticky;top:0;z-index:100}
+.top-nav .logo{font-size:15px;font-weight:600;letter-spacing:-.5px}
+.top-nav .logo span{color:#999}
+.top-nav nav{display:flex;gap:32px}
+.top-nav nav a{font-size:13px;color:#888;transition:color .15s}
+.top-nav nav a:hover,.top-nav nav a.active{color:#1a1a1a}
+.top-nav .nav-right{display:flex;align-items:center;gap:20px}
+.top-nav .nav-right a{font-size:13px;color:#888}
+.mono{font-family:'IBM Plex Mono',monospace}
+
+.page-wrap{max-width:720px;margin:0 auto;padding:48px 24px}
+.page-wrap h1{font-size:22px;font-weight:500;margin-bottom:4px}
+.page-wrap .sub{font-size:12px;color:#999;margin-bottom:32px}
+.tabs{display:flex;gap:0;border-bottom:2px solid #e8e8e6;margin-bottom:32px}
+.tab{padding:10px 20px;font-size:12px;color:#999;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tab:hover{color:#1a1a1a}
+.tab.active{color:#1a1a1a;border-bottom-color:#1a1a1a}
+.card{background:#fff;border:1px solid #e8e8e6;border-radius:8px;padding:28px;margin-bottom:20px}
+.card h3{font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:#999;margin-bottom:16px}
+.info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f0ee;font-size:13px}
+.info-row:last-child{border-bottom:none}
+.info-row .label{color:#888}
+.info-row .value{font-weight:500}
+.avatar-row{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.avatar{width:64px;height:64px;background:#1a1a1a;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:500}
+.avatar-info h2{font-size:18px;font-weight:500}
+.avatar-info p{font-size:12px;color:#999}
+.btn-sm{padding:8px 18px;background:#fff;border:1px solid #ddd;border-radius:6px;font-size:11px;font-family:inherit;cursor:pointer}
+.btn-sm:hover{border-color:#1a1a1a}
+</style>
+</head>
+<body>
+<header class="top-nav">
+  <a href="/10-home" class="logo">materia<span>.io</span></a>
+  <nav>
+    <a href="/10-materials">Materials</a>
+    <a href="/10-compare">Compare</a>
+    <a href="/10-cart">Quotes</a>
+    <a href="/10-account" class="active">Account</a>
+  </nav>
+  <div class="nav-right"><a href="/10-favorites">♡</a><a href="/10-settings">Settings</a></div>
+</header>
+
+<div class="page-wrap">
+  <div class="avatar-row">
+    <div class="avatar">AB</div>
+    <div class="avatar-info"><h2>Anna Berg</h2><p class="mono">Architect · Berg Arkitekter AS</p></div>
+  </div>
+
+  <div class="tabs">
+    <a href="/10-account" class="tab active">Profile</a>
+    <a href="/10-favorites" class="tab">Favorites</a>
+    <a href="/10-orders" class="tab">Orders</a>
+    <a href="/10-settings" class="tab">Settings</a>
+  </div>
+
+  <div class="card">
+    <h3 class="mono">Personal Information</h3>
+    <div class="info-row"><span class="label">Name</span><span class="value">Anna Berg</span></div>
+    <div class="info-row"><span class="label">Email</span><span class="value">anna@bergark.no</span></div>
+    <div class="info-row"><span class="label">Phone</span><span class="value">+47 912 34 567</span></div>
+    <div class="info-row"><span class="label">Role</span><span class="value">Architect</span></div>
+  </div>
+
+  <div class="card">
+    <h3 class="mono">Company Details</h3>
+    <div class="info-row"><span class="label">Company</span><span class="value">Berg Arkitekter AS</span></div>
+    <div class="info-row"><span class="label">Org. Number</span><span class="value">NO 987 654 321</span></div>
+    <div class="info-row"><span class="label">Address</span><span class="value">Aker Brygge 12, 0250 Oslo</span></div>
+    <div class="info-row"><span class="label">Country</span><span class="value">Norway</span></div>
+  </div>
+
+  <div style="display:flex;gap:10px">
+    <button class="btn-sm" onclick="alert('Edit profile')">Edit Profile</button>
+    <button class="btn-sm" onclick="window.location='/10-login'" style="color:#c44">Sign Out</button>
+  </div>
+</div>
+</body>
+</html>

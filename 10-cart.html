@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Materials Marketplace — Quote Request</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;background:#fafaf8;color:#1a1a1a}
+a{text-decoration:none;color:inherit}
+.top-nav{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:56px;background:#fff;border-bottom:1px solid #e8e8e6;position:sticky;top:0;z-index:100}
+.top-nav .logo{font-size:15px;font-weight:600;letter-spacing:-.5px}
+.top-nav .logo span{color:#999}
+.top-nav nav{display:flex;gap:32px}
+.top-nav nav a{font-size:13px;color:#888;transition:color .15s}
+.top-nav nav a:hover,.top-nav nav a.active{color:#1a1a1a}
+.top-nav .nav-right{display:flex;align-items:center;gap:20px}
+.top-nav .nav-right a{font-size:13px;color:#888}
+.mono{font-family:'IBM Plex Mono',monospace}
+.page-wrap{max-width:900px;margin:0 auto;padding:48px 24px}
+.page-wrap h1{font-size:22px;font-weight:500;margin-bottom:4px}
+.page-wrap .sub{font-size:12px;color:#999;margin-bottom:32px}
+.cart-layout{display:grid;grid-template-columns:1fr 320px;gap:32px}
+.cart-item{display:flex;gap:16px;background:#fff;border:1px solid #e8e8e6;border-radius:8px;padding:16px;margin-bottom:10px}
+.cart-swatch{width:60px;height:60px;border-radius:6px;flex-shrink:0}
+.cart-info{flex:1}
+.cart-info h3{font-size:14px;font-weight:500}
+.cart-info .cbrand{font-size:11px;color:#999;margin-bottom:4px}
+.cart-info .cmeta{font-size:10px;color:#888}
+.cart-right{text-align:right;display:flex;flex-direction:column;justify-content:space-between}
+.cart-right .cprice{font-size:16px;font-weight:600}
+.qty-row{display:flex;align-items:center;gap:8px}
+.qty-row input{width:60px;padding:4px 8px;border:1px solid #ddd;border-radius:4px;text-align:center;font-size:12px;font-family:inherit}
+.qty-row span{font-size:10px;color:#999}
+.cart-remove{font-size:10px;color:#c44;cursor:pointer;background:none;border:none}
+.summary{background:#fff;border:1px solid #e8e8e6;border-radius:8px;padding:24px;height:fit-content;position:sticky;top:72px}
+.summary h3{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#999;margin-bottom:16px}
+.sum-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;border-bottom:1px solid #f0f0ee}
+.sum-row:last-of-type{border-bottom:none}
+.sum-row.total{font-weight:600;font-size:15px;border-top:2px solid #1a1a1a;margin-top:8px;padding-top:12px}
+.field{margin-top:16px}
+.field label{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin-bottom:4px}
+.field input,.field textarea{width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:12px;font-family:inherit}
+.field textarea{height:64px;resize:vertical}
+.field input:focus,.field textarea:focus{outline:none;border-color:#1a1a1a}
+.btn-primary{width:100%;padding:12px;background:#1a1a1a;color:#fff;border:none;border-radius:6px;font-size:13px;font-family:inherit;font-weight:500;cursor:pointer;margin-top:16px}
+.btn-primary:hover{background:#333}
+.empty-note{font-size:11px;color:#999;margin-top:8px;text-align:center}
+</style>
+</head>
+<body>
+<header class="top-nav">
+  <a href="/10-home" class="logo">materia<span>.io</span></a>
+  <nav>
+    <a href="/10-materials">Materials</a>
+    <a href="/10-compare">Compare</a>
+    <a href="/10-cart" class="active">Quotes</a>
+    <a href="/10-account">Account</a>
+  </nav>
+  <div class="nav-right"><a href="/10-favorites">♡</a><a href="/10-login">Sign in</a></div>
+</header>
+<div class="page-wrap">
+  <h1>Quote Request</h1>
+  <p class="sub mono">3 materials · Request pricing for your project</p>
+  <div class="cart-layout">
+    <div class="cart-items" id="items"></div>
+    <div class="summary">
+      <h3 class="mono">Summary</h3>
+      <div class="sum-row"><span>Carrara Marble (20 m²)</span><span>€3,700</span></div>
+      <div class="sum-row"><span>White Oak Plank (45 m²)</span><span>€4,230</span></div>
+      <div class="sum-row"><span>Acoustic Felt (30 m²)</span><span>€1,440</span></div>
+      <div class="sum-row total"><span>Estimated Total</span><span>€9,370</span></div>
+      <div class="field"><label class="mono">Project Name</label><input type="text" placeholder="e.g. Bjørvika Office Remodel"></div>
+      <div class="field"><label class="mono">Delivery Address</label><input type="text" placeholder="Aker Brygge 12, Oslo"></div>
+      <div class="field"><label class="mono">Notes</label><textarea placeholder="Special requirements, timeline, etc."></textarea></div>
+      <button class="btn-primary" onclick="alert('Quote request submitted!')">Submit Quote Request</button>
+      <p class="empty-note">Suppliers typically respond within 2 business days</p>
+    </div>
+  </div>
+</div>
+<script src="/data.js"></script>
+<script>
+const cart=[{m:materials[0],qty:20},{m:materials[2],qty:45},{m:materials[3],qty:30}];
+document.getElementById('items').innerHTML=cart.map(({m,qty})=>`
+  <div class="cart-item">
+    <div class="cart-swatch" style="background:${m.color};border-radius:6px"></div>
+    <div class="cart-info">
+      <h3>${m.name}</h3>
+      <div class="cbrand">${m.brand}</div>
+      <div class="cmeta">${m.type} · ${m.fire} · CO₂ ${m.co2} kg/m²</div>
+    </div>
+    <div class="cart-right">
+      <span class="cprice">€${(m.price*qty).toLocaleString()}</span>
+      <div class="qty-row"><input type="number" value="${qty}" min="1"><span>m²</span></div>
+      <button class="cart-remove">Remove</button>
+    </div>
+  </div>
+`).join('');
+</script>
+</body>
+</html>

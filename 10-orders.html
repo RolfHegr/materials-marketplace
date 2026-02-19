@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Materials Marketplace — Orders</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;background:#fafaf8;color:#1a1a1a}
+a{text-decoration:none;color:inherit}
+.top-nav{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:56px;background:#fff;border-bottom:1px solid #e8e8e6;position:sticky;top:0;z-index:100}
+.top-nav .logo{font-size:15px;font-weight:600;letter-spacing:-.5px}
+.top-nav .logo span{color:#999}
+.top-nav nav{display:flex;gap:32px}
+.top-nav nav a{font-size:13px;color:#888;transition:color .15s}
+.top-nav nav a:hover,.top-nav nav a.active{color:#1a1a1a}
+.top-nav .nav-right{display:flex;align-items:center;gap:20px}
+.top-nav .nav-right a{font-size:13px;color:#888}
+.mono{font-family:'IBM Plex Mono',monospace}
+.page-wrap{max-width:900px;margin:0 auto;padding:48px 24px}
+.page-wrap h1{font-size:22px;font-weight:500;margin-bottom:4px}
+.page-wrap .sub{font-size:12px;color:#999;margin-bottom:32px}
+.tabs{display:flex;gap:0;border-bottom:2px solid #e8e8e6;margin-bottom:32px}
+.tab{padding:10px 20px;font-size:12px;color:#999;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tab:hover{color:#1a1a1a}
+.tab.active{color:#1a1a1a;border-bottom-color:#1a1a1a}
+.order-card{background:#fff;border:1px solid #e8e8e6;border-radius:8px;margin-bottom:12px;overflow:hidden}
+.order-header{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid #f0f0ee}
+.order-header .oid{font-size:13px;font-weight:500}
+.order-header .odate{font-size:11px;color:#999}
+.status{padding:4px 10px;border-radius:12px;font-size:10px;font-weight:500}
+.status.pending{background:#fff8e6;color:#b8860b}
+.status.confirmed{background:#e8f5e9;color:#2e7d32}
+.status.delivered{background:#f0f0ee;color:#666}
+.status.quoted{background:#e3f2fd;color:#1565c0}
+.order-items{padding:12px 20px}
+.oi-row{display:flex;justify-content:space-between;padding:6px 0;font-size:12px;border-bottom:1px solid #f8f8f6}
+.oi-row:last-child{border-bottom:none}
+.oi-row .oname{font-weight:500}
+.oi-row .oqty{color:#999}
+.oi-row .oprice{font-weight:500}
+.order-footer{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#fafaf8;border-top:1px solid #f0f0ee}
+.order-footer .ototal{font-size:14px;font-weight:600}
+.order-footer .oproject{font-size:11px;color:#999}
+.btn-sm{padding:6px 14px;border:1px solid #ddd;border-radius:4px;font-size:11px;background:#fff;cursor:pointer;font-family:inherit}
+.btn-sm:hover{border-color:#1a1a1a}
+</style>
+</head>
+<body>
+<header class="top-nav">
+  <a href="/10-home" class="logo">materia<span>.io</span></a>
+  <nav>
+    <a href="/10-materials">Materials</a>
+    <a href="/10-compare">Compare</a>
+    <a href="/10-cart">Quotes</a>
+    <a href="/10-account" class="active">Account</a>
+  </nav>
+  <div class="nav-right"><a href="/10-favorites">♡</a><a href="/10-settings">Settings</a></div>
+</header>
+<div class="page-wrap">
+  <h1>Orders & Quotes</h1>
+  <p class="sub mono">Your quote history and order tracking</p>
+  <div class="tabs">
+    <a href="/10-account" class="tab">Profile</a>
+    <a href="/10-favorites" class="tab">Favorites</a>
+    <a href="/10-orders" class="tab active">Orders</a>
+    <a href="/10-settings" class="tab">Settings</a>
+  </div>
+
+  <div class="order-card">
+    <div class="order-header">
+      <div><span class="oid">QR-2026-0047</span></div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <span class="odate mono">Feb 18, 2026</span>
+        <span class="status quoted">Quote Received</span>
+      </div>
+    </div>
+    <div class="order-items">
+      <div class="oi-row"><span class="oname">Carrara Marble</span><span class="oqty">20 m²</span><span class="oprice">€3,700</span></div>
+      <div class="oi-row"><span class="oname">White Oak Plank</span><span class="oqty">45 m²</span><span class="oprice">€4,230</span></div>
+    </div>
+    <div class="order-footer">
+      <div><span class="oproject mono">Bjørvika Office Remodel</span></div>
+      <div style="display:flex;gap:8px;align-items:center"><span class="ototal">€7,930</span><button class="btn-sm">View Quote</button></div>
+    </div>
+  </div>
+
+  <div class="order-card">
+    <div class="order-header">
+      <div><span class="oid">QR-2026-0041</span></div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <span class="odate mono">Feb 10, 2026</span>
+        <span class="status confirmed">Confirmed</span>
+      </div>
+    </div>
+    <div class="order-items">
+      <div class="oi-row"><span class="oname">Brushed Concrete</span><span class="oqty">120 m²</span><span class="oprice">€7,440</span></div>
+      <div class="oi-row"><span class="oname">Acoustic Felt</span><span class="oqty">60 m²</span><span class="oprice">€2,880</span></div>
+      <div class="oi-row"><span class="oname">Gypsum Board</span><span class="oqty">80 m²</span><span class="oprice">€1,760</span></div>
+    </div>
+    <div class="order-footer">
+      <div><span class="oproject mono">Grünerløkka School Extension</span></div>
+      <div style="display:flex;gap:8px;align-items:center"><span class="ototal">€12,080</span><button class="btn-sm">Track Order</button></div>
+    </div>
+  </div>
+
+  <div class="order-card">
+    <div class="order-header">
+      <div><span class="oid">QR-2026-0033</span></div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <span class="odate mono">Jan 22, 2026</span>
+        <span class="status delivered">Delivered</span>
+      </div>
+    </div>
+    <div class="order-items">
+      <div class="oi-row"><span class="oname">Recycled Glass Tile</span><span class="oqty">35 m²</span><span class="oprice">€2,730</span></div>
+    </div>
+    <div class="order-footer">
+      <div><span class="oproject mono">Frogner Residence</span></div>
+      <div style="display:flex;gap:8px;align-items:center"><span class="ototal">€2,730</span><button class="btn-sm">Reorder</button></div>
+    </div>
+  </div>
+
+  <div class="order-card">
+    <div class="order-header">
+      <div><span class="oid">QR-2026-0028</span></div>
+      <div style="display:flex;gap:12px;align-items:center">
+        <span class="odate mono">Jan 15, 2026</span>
+        <span class="status pending">Pending Review</span>
+      </div>
+    </div>
+    <div class="order-items">
+      <div class="oi-row"><span class="oname">Zinc Panel</span><span class="oqty">200 m²</span><span class="oprice">€42,000</span></div>
+      <div class="oi-row"><span class="oname">Slate Cladding</span><span class="oqty">85 m²</span><span class="oprice">€14,280</span></div>
+    </div>
+    <div class="order-footer">
+      <div><span class="oproject mono">Aker Brygge Pavilion</span></div>
+      <div style="display:flex;gap:8px;align-items:center"><span class="ototal">€56,280</span><button class="btn-sm">View Details</button></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

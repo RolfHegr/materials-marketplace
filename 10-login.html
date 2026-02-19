@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Materials Marketplace — Sign In</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;background:#fafaf8;color:#1a1a1a;min-height:100vh;display:flex;flex-direction:column}
+a{text-decoration:none;color:inherit}
+.top-nav{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:56px;background:#fff;border-bottom:1px solid #e8e8e6}
+.top-nav .logo{font-size:15px;font-weight:600;letter-spacing:-.5px}
+.top-nav .logo span{color:#999}
+.top-nav nav{display:flex;gap:32px}
+.top-nav nav a{font-size:13px;color:#888;transition:color .15s}
+.top-nav nav a:hover{color:#1a1a1a}
+.top-nav .nav-right{display:flex;align-items:center;gap:20px}
+.top-nav .nav-right a{font-size:13px;color:#888}
+.mono{font-family:'IBM Plex Mono',monospace}
+.auth-wrap{flex:1;display:flex;align-items:center;justify-content:center}
+.auth-card{background:#fff;border:1px solid #e8e8e6;border-radius:8px;padding:40px;width:380px}
+.auth-card h1{font-size:22px;font-weight:500;margin-bottom:4px}
+.auth-card .sub{font-size:12px;color:#999;margin-bottom:28px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin-bottom:6px}
+.field input{width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:6px;font-size:13px;font-family:inherit}
+.field input:focus{outline:none;border-color:#1a1a1a}
+.btn-primary{width:100%;padding:12px;background:#1a1a1a;color:#fff;border:none;border-radius:6px;font-size:13px;font-family:inherit;font-weight:500;cursor:pointer;margin-top:8px}
+.btn-primary:hover{background:#333}
+.auth-footer{text-align:center;margin-top:20px;font-size:12px;color:#999}
+.auth-footer a{color:#1a1a1a;text-decoration:underline}
+.forgot{text-align:right;margin-top:-8px;margin-bottom:16px}
+.forgot a{font-size:11px;color:#999}
+.forgot a:hover{color:#1a1a1a}
+</style>
+</head>
+<body>
+<header class="top-nav">
+  <a href="/10-home" class="logo">materia<span>.io</span></a>
+  <nav>
+    <a href="/10-materials">Materials</a>
+    <a href="/10-compare">Compare</a>
+    <a href="/10-cart">Quotes</a>
+    <a href="/10-account">Account</a>
+  </nav>
+  <div class="nav-right"><a href="/10-register">Create account</a></div>
+</header>
+<div class="auth-wrap">
+  <div class="auth-card">
+    <h1>Sign in</h1>
+    <p class="sub">Access your materials workspace</p>
+    <div class="field"><label class="mono">Email</label><input type="email" placeholder="you@studio.com"></div>
+    <div class="field"><label class="mono">Password</label><input type="password" placeholder="••••••••"></div>
+    <div class="forgot"><a href="#">Forgot password?</a></div>
+    <button class="btn-primary" onclick="window.location='/10-account'">Sign In</button>
+    <div class="auth-footer">No account? <a href="/10-register">Create one</a></div>
+  </div>
+</div>
+</body>
+</html>

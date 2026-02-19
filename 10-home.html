@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Materials Marketplace — Home</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;background:#fafaf8;color:#1a1a1a}
+a{text-decoration:none;color:inherit}
+.top-nav{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:56px;background:#fff;border-bottom:1px solid #e8e8e6;position:sticky;top:0;z-index:100}
+.top-nav .logo{font-size:15px;font-weight:600;letter-spacing:-.5px}
+.top-nav .logo span{color:#999}
+.top-nav nav{display:flex;gap:32px}
+.top-nav nav a{font-size:13px;color:#888;font-weight:400;transition:color .15s}
+.top-nav nav a:hover,.top-nav nav a.active{color:#1a1a1a}
+.top-nav .nav-right{display:flex;align-items:center;gap:20px}
+.top-nav .nav-right a{font-size:13px;color:#888}
+.top-nav .nav-right a:hover{color:#1a1a1a}
+
+.hero{padding:100px 48px 80px;max-width:900px}
+.hero h1{font-size:52px;font-weight:300;line-height:1.1;margin-bottom:20px;letter-spacing:-1px}
+.hero h1 strong{font-weight:600}
+.hero p{font-size:17px;color:#666;line-height:1.6;max-width:560px;margin-bottom:32px}
+.hero .cta-row{display:flex;gap:12px}
+.btn-primary{padding:12px 28px;background:#1a1a1a;color:#fff;border:none;border-radius:6px;font-size:13px;font-family:inherit;font-weight:500;cursor:pointer;transition:background .15s}
+.btn-primary:hover{background:#333}
+.btn-secondary{padding:12px 28px;background:#fff;color:#1a1a1a;border:1px solid #ddd;border-radius:6px;font-size:13px;font-family:inherit;font-weight:500;cursor:pointer;transition:all .15s}
+.btn-secondary:hover{border-color:#1a1a1a}
+
+.section{padding:64px 48px}
+.section-title{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#999;margin-bottom:24px}
+
+.featured-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.f-card{background:#fff;border:1px solid #e8e8e6;border-radius:8px;overflow:hidden;transition:transform .12s;cursor:pointer}
+.f-card:hover{transform:translateY(-2px)}
+.f-swatch{height:80px}
+.f-body{padding:14px}
+.f-body h3{font-size:14px;font-weight:500;margin-bottom:2px}
+.f-body .fbrand{font-size:11px;color:#999;margin-bottom:8px}
+.f-body .fmeta{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.f-body .fmeta span{font-size:9px;background:#f5f5f3;padding:2px 6px;border-radius:3px;color:#888;font-family:'IBM Plex Mono',monospace}
+.f-body .fprice{font-size:16px;font-weight:600}
+
+.cats-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.cat-card{background:#fff;border:1px solid #e8e8e6;border-radius:8px;padding:24px 16px;text-align:center;cursor:pointer;transition:all .15s}
+.cat-card:hover{border-color:#1a1a1a;transform:translateY(-1px)}
+.cat-icon{font-size:24px;margin-bottom:8px}
+.cat-card h4{font-size:12px;font-weight:500;margin-bottom:2px}
+.cat-card p{font-size:10px;color:#999;font-family:'IBM Plex Mono',monospace}
+
+.vp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.vp-card{padding:28px;border-left:2px solid #e8e8e6}
+.vp-card h4{font-size:14px;font-weight:500;margin-bottom:6px}
+.vp-card p{font-size:12px;color:#888;line-height:1.5}
+
+.footer{padding:32px 48px;border-top:1px solid #e8e8e6;display:flex;justify-content:space-between;align-items:center}
+.footer p{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#bbb}
+</style>
+</head>
+<body>
+<header class="top-nav">
+  <a href="/10-home" class="logo">materia<span>.io</span></a>
+  <nav>
+    <a href="/10-materials">Materials</a>
+    <a href="/10-compare">Compare</a>
+    <a href="/10-cart">Quotes</a>
+    <a href="/10-account">Account</a>
+  </nav>
+  <div class="nav-right">
+    <a href="/10-favorites">♡</a>
+    <a href="/10-login">Sign in</a>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Specify <strong>smarter</strong> materials for better buildings</h1>
+  <p>A curated marketplace of certified building materials with full environmental data, fire safety ratings, and transparent pricing — built for architects.</p>
+  <div class="cta-row">
+    <a href="/10-materials"><button class="btn-primary">Browse Materials</button></a>
+    <a href="/10-register"><button class="btn-secondary">Create Account</button></a>
+  </div>
+</section>
+
+<section class="section" style="background:#fff;border-top:1px solid #e8e8e6;border-bottom:1px solid #e8e8e6">
+  <div class="section-title">Featured Materials</div>
+  <div class="featured-grid" id="featured"></div>
+</section>
+
+<section class="section">
+  <div class="section-title">Categories</div>
+  <div class="cats-grid">
+    <a href="/10-materials" class="cat-card"><div class="cat-icon">▦</div><h4>Wall</h4><p>Tiles, stone, cladding</p></a>
+    <a href="/10-materials" class="cat-card"><div class="cat-icon">▬</div><h4>Floor</h4><p>Wood, concrete, vinyl</p></a>
+    <a href="/10-materials" class="cat-card"><div class="cat-icon">▤</div><h4>Ceiling</h4><p>Acoustic, gypsum, panels</p></a>
+    <a href="/10-materials" class="cat-card"><div class="cat-icon">▥</div><h4>Facade</h4><p>Metal, ceramic, composite</p></a>
+    <a href="/10-materials" class="cat-card"><div class="cat-icon">△</div><h4>Roof</h4><p>Standing seam, green roof</p></a>
+    <a href="/10-materials" class="cat-card"><div class="cat-icon">◯</div><h4>All</h4><p>Browse everything</p></a>
+  </div>
+</section>
+
+<section class="section" style="background:#fff;border-top:1px solid #e8e8e6;border-bottom:1px solid #e8e8e6">
+  <div class="section-title">Why Architects Choose Us</div>
+  <div class="vp-grid">
+    <div class="vp-card"><h4>Full Environmental Data</h4><p>Every product includes CO₂ per m², EPDs, and lifecycle data so you can make informed, sustainable specifications.</p></div>
+    <div class="vp-card"><h4>Fire Safety Verified</h4><p>Euroclass ratings (A1–E) displayed upfront. Filter by fire class to match your project requirements instantly.</p></div>
+    <div class="vp-card"><h4>Direct B2B Pricing</h4><p>Transparent per-unit pricing with lead times. Request quotes for your exact quantities and delivery schedule.</p></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© 2026 materia.io — Built for architects</p>
+  <p>Style 10 — Space Grotesk + IBM Plex Mono</p>
+</footer>
+
+<script src="/data.js"></script>
+<script>
+const featured = materials.slice(0,4);
+document.getElementById('featured').innerHTML = featured.map(m=>`
+  <a href="/10-product" class="f-card">
+    <div class="f-swatch" style="background:${m.color}"></div>
+    <div class="f-body">
+      <h3>${m.name}</h3>
+      <div class="fbrand">${m.brand}</div>
+      <div class="fmeta"><span>${m.type}</span><span>${m.fire}</span><span>CO₂ ${m.co2}</span></div>
+      <div class="fprice">€${m.price}</div>
+    </div>
+  </a>
+`).join('');
+</script>
+</body>
+</html>

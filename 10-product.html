@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Materials Marketplace — Product Detail</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;background:#fafaf8;color:#1a1a1a}
+a{text-decoration:none;color:inherit}
+.top-nav{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:56px;background:#fff;border-bottom:1px solid #e8e8e6;position:sticky;top:0;z-index:100}
+.top-nav .logo{font-size:15px;font-weight:600;letter-spacing:-.5px}
+.top-nav .logo span{color:#999}
+.top-nav nav{display:flex;gap:32px}
+.top-nav nav a{font-size:13px;color:#888;transition:color .15s}
+.top-nav nav a:hover{color:#1a1a1a}
+.top-nav .nav-right{display:flex;align-items:center;gap:20px}
+.top-nav .nav-right a{font-size:13px;color:#888}
+.top-nav .nav-right a:hover{color:#1a1a1a}
+.mono{font-family:'IBM Plex Mono',monospace}
+.breadcrumb{padding:16px 48px;font-size:11px;color:#999}
+.breadcrumb a{color:#888}
+.breadcrumb a:hover{color:#1a1a1a}
+
+.product-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;padding:0 48px 64px;max-width:1200px}
+.product-images .main-img{width:100%;height:360px;border-radius:8px;border:1px solid #e8e8e6}
+.product-images .thumbs{display:flex;gap:8px;margin-top:8px}
+.product-images .thumb{width:72px;height:56px;border-radius:4px;border:1px solid #e8e8e6;cursor:pointer}
+.product-images .thumb.active{border-color:#1a1a1a}
+
+.product-info h1{font-size:28px;font-weight:500;margin-bottom:4px}
+.product-info .brand{font-size:13px;color:#999;margin-bottom:20px}
+.product-info .price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:24px}
+.product-info .price{font-size:28px;font-weight:600}
+.product-info .unit{font-size:12px;color:#999}
+.product-info .lead{font-size:11px;color:#999}
+
+.actions{display:flex;gap:10px;margin-bottom:32px}
+.btn-primary{padding:12px 28px;background:#1a1a1a;color:#fff;border:none;border-radius:6px;font-size:13px;font-family:inherit;font-weight:500;cursor:pointer}
+.btn-primary:hover{background:#333}
+.btn-outline{padding:12px 28px;background:#fff;color:#1a1a1a;border:1px solid #ddd;border-radius:6px;font-size:13px;font-family:inherit;cursor:pointer}
+.btn-outline:hover{border-color:#1a1a1a}
+
+.specs-table{width:100%;margin-bottom:24px}
+.specs-table .st-header{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#999;margin-bottom:12px}
+.specs-table table{width:100%;border-collapse:collapse}
+.specs-table td{padding:8px 0;font-size:12px;border-bottom:1px solid #f0f0ee}
+.specs-table td:first-child{color:#888;width:140px}
+.specs-table td:last-child{font-weight:500}
+
+.cert-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.cert-badge{padding:6px 14px;border:1px solid #e8e8e6;border-radius:20px;font-size:11px;background:#fff}
+
+.co2-bar{margin-bottom:24px}
+.co2-bar .label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:6px}
+.co2-track{height:8px;background:#f0f0ee;border-radius:4px;overflow:hidden}
+.co2-fill{height:100%;background:#1a1a1a;border-radius:4px}
+.co2-val{font-size:11px;color:#888;margin-top:4px}
+
+.section-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#999;margin-bottom:16px;padding:0 48px}
+.similar-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:0 48px 64px}
+.s-card{background:#fff;border:1px solid #e8e8e6;border-radius:8px;overflow:hidden;transition:transform .12s;cursor:pointer}
+.s-card:hover{transform:translateY(-2px)}
+.s-swatch{height:56px}
+.s-body{padding:12px}
+.s-body h4{font-size:13px;font-weight:500}
+.s-body p{font-size:10px;color:#999}
+.s-body .sp{font-size:14px;font-weight:600;margin-top:4px}
+</style>
+</head>
+<body>
+<header class="top-nav">
+  <a href="/10-home" class="logo">materia<span>.io</span></a>
+  <nav>
+    <a href="/10-materials">Materials</a>
+    <a href="/10-compare">Compare</a>
+    <a href="/10-cart">Quotes</a>
+    <a href="/10-account">Account</a>
+  </nav>
+  <div class="nav-right"><a href="/10-favorites">♡</a><a href="/10-login">Sign in</a></div>
+</header>
+
+<div class="breadcrumb"><a href="/10-home">Home</a> / <a href="/10-materials">Materials</a> / Carrara Marble</div>
+
+<div class="product-layout">
+  <div class="product-images">
+    <div class="main-img" style="background:#e8e4df"></div>
+    <div class="thumbs">
+      <div class="thumb active" style="background:#e8e4df"></div>
+      <div class="thumb" style="background:#d8d4cf"></div>
+      <div class="thumb" style="background:#f0ece6"></div>
+    </div>
+  </div>
+  <div class="product-info">
+    <h1>Carrara Marble</h1>
+    <div class="brand">by Stonemark</div>
+    <div class="price-row">
+      <span class="price">€185</span>
+      <span class="unit mono">per m²</span>
+      <span class="lead mono">· 14 day lead time</span>
+    </div>
+    <div class="actions">
+      <button class="btn-primary" onclick="alert('Added to quote request')">Add to Quote</button>
+      <button class="btn-outline" onclick="this.textContent=this.textContent==='♡ Favorited'?'♡ Favorite':'♡ Favorited'">♡ Favorite</button>
+      <button class="btn-outline" onclick="window.location='/10-compare'">Compare</button>
+    </div>
+
+    <div class="specs-table">
+      <div class="st-header mono">Specifications</div>
+      <table>
+        <tr><td class="mono">Type</td><td>Wall</td></tr>
+        <tr><td class="mono">Finish</td><td>Glossy</td></tr>
+        <tr><td class="mono">Color Family</td><td>White</td></tr>
+        <tr><td class="mono">Use</td><td>Indoor</td></tr>
+        <tr><td class="mono">Dimensions</td><td>600 × 300 × 12 mm</td></tr>
+        <tr><td class="mono">Weight</td><td>32 kg/m²</td></tr>
+        <tr><td class="mono">Water Absorption</td><td>≤ 0.2%</td></tr>
+      </table>
+    </div>
+
+    <div class="specs-table">
+      <div class="st-header mono">Fire Safety</div>
+      <table>
+        <tr><td class="mono">Euroclass</td><td>A1 — Non-combustible</td></tr>
+        <tr><td class="mono">Smoke</td><td>s1 — Little smoke</td></tr>
+        <tr><td class="mono">Droplets</td><td>d0 — No droplets</td></tr>
+      </table>
+    </div>
+
+    <div class="co2-bar">
+      <div class="label mono">CO₂ Emissions</div>
+      <div class="co2-track"><div class="co2-fill" style="width:62%"></div></div>
+      <div class="co2-val mono">12.4 kg CO₂/m² — Moderate impact</div>
+    </div>
+
+    <div class="cert-badges">
+      <span class="cert-badge mono">EPD Verified</span>
+      <span class="cert-badge mono">EN 14411</span>
+      <span class="cert-badge mono">CE Marked</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-title mono">Similar Materials</div>
+<div class="similar-grid" id="similar"></div>
+
+<script src="/data.js"></script>
+<script>
+const similar = materials.filter(m=>m.type==='wall'&&m.name!=='Carrara Marble').concat(materials.filter(m=>m.colorFamily==='white'&&m.name!=='Carrara Marble')).slice(0,4);
+document.getElementById('similar').innerHTML=similar.map(m=>`
+  <a href="/10-product" class="s-card">
+    <div class="s-swatch" style="background:${m.color}"></div>
+    <div class="s-body"><h4>${m.name}</h4><p>${m.brand} · ${m.fire}</p><div class="sp">€${m.price}</div></div>
+  </a>
+`).join('');
+</script>
+</body>
+</html>

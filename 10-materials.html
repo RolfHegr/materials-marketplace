@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Materials Marketplace — Browse Materials</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Space Grotesk',sans-serif;background:#fafaf8;color:#1a1a1a;min-height:100vh;display:flex;flex-direction:column}
+  a{text-decoration:none;color:inherit}
+  .top-nav{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:56px;background:#fff;border-bottom:1px solid #e8e8e6;flex-shrink:0}
+  .top-nav .logo{font-size:15px;font-weight:600;letter-spacing:-.5px}
+  .top-nav .logo span{color:#999}
+  .top-nav nav{display:flex;gap:32px}
+  .top-nav nav a{font-size:13px;color:#888;transition:color .15s}
+  .top-nav nav a:hover,.top-nav nav a.active{color:#1a1a1a}
+  .top-nav .nav-right{display:flex;align-items:center;gap:20px}
+  .top-nav .nav-right a{font-size:13px;color:#888}
+  .top-nav .nav-right a:hover{color:#1a1a1a}
+  .main-wrap{flex:1;display:flex;overflow:hidden}
+
+  .filter-sidebar{width:260px;background:#fff;border-right:1px solid #e8e8e6;flex-shrink:0;display:flex;flex-direction:column}
+  .fs-header{padding:20px;border-bottom:1px solid #e8e8e6;display:flex;justify-content:space-between;align-items:center}
+  .fs-header h2{font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase}
+  .fs-header .reset{font-size:10px;color:#999;cursor:pointer;text-decoration:underline}
+  .fs-scroll{flex:1;overflow-y:auto;padding:16px 20px}
+  .fs-section{margin-bottom:18px}
+  .fs-section h3{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#aaa;margin-bottom:8px;font-weight:400;display:flex;justify-content:space-between;cursor:pointer}
+  .fs-section h3::after{content:'−';font-size:12px}
+  .fs-section.closed h3::after{content:'+'}
+  .fs-section.closed .fs-body{display:none}
+  .type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+  .type-btn{padding:8px 4px;border:1px solid #e0e0de;border-radius:4px;font-size:10px;text-align:center;cursor:pointer;background:#fff;font-family:inherit;color:#888;transition:all .12s}
+  .type-btn:hover{border-color:#888}
+  .type-btn.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+  .cb-col{display:flex;flex-direction:column;gap:5px}
+  .cb-col label{font-size:11px;display:flex;align-items:center;gap:7px;color:#666;cursor:pointer}
+  .cb-col input{accent-color:#1a1a1a}
+  .color-row{display:flex;gap:6px;flex-wrap:wrap}
+  .cdot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .12s}
+  .cdot:hover,.cdot.active{border-color:#1a1a1a;transform:scale(1.15)}
+  .mini-chips{display:flex;flex-wrap:wrap;gap:4px}
+  .mini-chip{padding:4px 10px;border:1px solid #ddd;border-radius:12px;font-size:10px;cursor:pointer;background:#fff;font-family:inherit;color:#888}
+  .mini-chip:hover{border-color:#888}
+  .mini-chip.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+  .range-block input[type=range]{width:100%;accent-color:#1a1a1a;margin:4px 0}
+  .range-block .rl{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:9px;color:#bbb}
+  .toggle-pills{display:flex;gap:0;border:1px solid #ddd;border-radius:6px;overflow:hidden}
+  .tpill{padding:6px 14px;font-size:10px;cursor:pointer;background:#fff;border:none;border-right:1px solid #ddd;font-family:inherit;color:#888}
+  .tpill:last-child{border-right:none}
+  .tpill.active{background:#1a1a1a;color:#fff}
+
+  .content{flex:1;display:flex;flex-direction:column;overflow:hidden}
+  .top-bar{padding:16px 28px;border-bottom:1px solid #e8e8e6;display:flex;justify-content:space-between;align-items:center}
+  .top-bar h1{font-size:18px;font-weight:500}
+  .top-bar .meta{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#999}
+  .view-toggle{display:flex;gap:4px}
+  .vt-btn{padding:6px 12px;border:1px solid #ddd;background:#fff;font-size:11px;cursor:pointer;font-family:inherit;color:#888;border-radius:4px}
+  .vt-btn.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+  .search-row{padding:12px 28px;border-bottom:1px solid #eee}
+  .search-row input{width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:6px;font-size:13px;font-family:inherit}
+  .search-row input:focus{outline:none;border-color:#1a1a1a}
+  .results{flex:1;overflow-y:auto;padding:20px 28px}
+  .grid-view{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+  .g-card{background:#fff;border:1px solid #e8e8e6;border-radius:8px;overflow:hidden;transition:transform .12s;cursor:pointer}
+  .g-card:hover{transform:translateY(-2px)}
+  .g-swatch{height:52px;position:relative}
+  .g-swatch .badges{position:absolute;top:6px;right:6px;display:flex;gap:3px}
+  .g-swatch .fbadge{background:rgba(0,0,0,.5);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:8px;padding:2px 5px;border-radius:2px}
+  .g-body{padding:12px}
+  .g-body h3{font-size:13px;font-weight:500;margin-bottom:1px}
+  .g-body .gbrand{font-size:10px;color:#999;margin-bottom:6px}
+  .g-body .gmeta{font-size:10px;color:#888;display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+  .g-body .gmeta span{background:#f5f5f3;padding:2px 5px;border-radius:3px}
+  .g-body .gfoot{display:flex;justify-content:space-between;align-items:baseline}
+  .g-body .gprice{font-size:16px;font-weight:600}
+  .g-body .glead{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#bbb}
+  .table-view{width:100%}
+  .table-view table{width:100%;border-collapse:collapse}
+  .table-view th{text-align:left;font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#aaa;padding:6px 10px;border-bottom:2px solid #1a1a1a;font-weight:400}
+  .table-view td{padding:8px 10px;border-bottom:1px solid #eee;font-size:12px}
+  .table-view tr:hover{background:#f8f8f6}
+  .table-view .tswatch{width:16px;height:16px;border-radius:2px;display:inline-block;border:1px solid #ddd}
+  .table-view .tprice{font-weight:600}
+  .table-view .tcert{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#888}
+  .no-results{color:#999;font-style:italic;padding:20px;grid-column:1/-1}
+</style>
+</head>
+<body>
+<header class="top-nav">
+  <a href="/10-home" class="logo">materia<span>.io</span></a>
+  <nav>
+    <a href="/10-materials" class="active">Materials</a>
+    <a href="/10-compare">Compare</a>
+    <a href="/10-cart">Quotes</a>
+    <a href="/10-account">Account</a>
+  </nav>
+  <div class="nav-right"><a href="/10-favorites">♡</a><a href="/10-login">Sign in</a></div>
+</header>
+
+<div class="main-wrap">
+<aside class="filter-sidebar">
+  <div class="fs-header"><h2>Filters</h2><span class="reset" onclick="resetAll()">Reset</span></div>
+  <div class="fs-scroll">
+    <div class="fs-section"><h3 onclick="this.parentElement.classList.toggle('closed')">Material Type</h3><div class="fs-body type-grid" id="fType"></div></div>
+    <div class="fs-section"><h3 onclick="this.parentElement.classList.toggle('closed')">Fire Safety</h3><div class="fs-body cb-col" id="fFire"></div></div>
+    <div class="fs-section"><h3 onclick="this.parentElement.classList.toggle('closed')">Color</h3><div class="fs-body color-row" id="fColor"></div></div>
+    <div class="fs-section"><h3 onclick="this.parentElement.classList.toggle('closed')">Finish</h3><div class="fs-body mini-chips" id="fFinish"></div></div>
+    <div class="fs-section"><h3 onclick="this.parentElement.classList.toggle('closed')">Certifications</h3><div class="fs-body cb-col" id="fCert"></div></div>
+    <div class="fs-section"><h3 onclick="this.parentElement.classList.toggle('closed')">Use</h3><div class="fs-body toggle-pills" id="fUse"></div></div>
+    <div class="fs-section"><h3 onclick="this.parentElement.classList.toggle('closed')">CO₂ Emissions</h3><div class="fs-body range-block"><input type="range" id="rCo2" min="0" max="20" step=".5" value="20" oninput="render()"><div class="rl"><span>0</span><span id="rCo2V">≤ 20 kg/m²</span></div></div></div>
+    <div class="fs-section"><h3 onclick="this.parentElement.classList.toggle('closed')">Price</h3><div class="fs-body range-block"><input type="range" id="rPrice" min="0" max="350" step="5" value="350" oninput="render()"><div class="rl"><span>€0</span><span id="rPriceV">≤ €350</span></div></div></div>
+    <div class="fs-section"><h3 onclick="this.parentElement.classList.toggle('closed')">Lead Time</h3><div class="fs-body range-block"><input type="range" id="rLead" min="1" max="40" value="40" oninput="render()"><div class="rl"><span>1d</span><span id="rLeadV">≤ 40 days</span></div></div></div>
+    <div class="fs-section"><h3 onclick="this.parentElement.classList.toggle('closed')">Brand</h3><div class="fs-body cb-col" id="fBrand"></div></div>
+  </div>
+</aside>
+
+<div class="content">
+  <div class="top-bar">
+    <div><h1>Materials</h1></div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <span class="meta" id="count"></span>
+      <div class="view-toggle">
+        <button class="vt-btn active" onclick="setView('grid',this)">Grid</button>
+        <button class="vt-btn" onclick="setView('table',this)">Table</button>
+      </div>
+    </div>
+  </div>
+  <div class="search-row"><input type="text" id="search" placeholder="Search by name, brand, type…" oninput="render()"></div>
+  <div class="results" id="results"></div>
+</div>
+</div>
+
+<script src="/data.js"></script>
+<script>
+const colorMap={white:'#e8e4df',grey:'#9a9a96',brown:'#c8a97e',red:'#c4724e',black:'#3d3d3d',green:'#7ba3a0'};
+const sel={type:new Set(),fire:new Set(),finish:new Set(),cert:new Set(),brand:new Set(),use:new Set(),color:new Set()};
+let viewMode='grid';
+
+const ft=document.getElementById('fType');
+allTypes.forEach(t=>{const b=document.createElement('button');b.className='type-btn';b.textContent=t;b.onclick=()=>{b.classList.toggle('active');sel.type.has(t)?sel.type.delete(t):sel.type.add(t);render()};ft.appendChild(b)});
+const ff=document.getElementById('fFire');
+allFire.forEach(v=>{const l=document.createElement('label');l.innerHTML=`<input type="checkbox" onchange="sel.fire.has('${v}')?sel.fire.delete('${v}'):sel.fire.add('${v}');render()"> ${v}`;ff.appendChild(l)});
+const fc=document.getElementById('fColor');
+allColorFamily.forEach(c=>{const d=document.createElement('div');d.className='cdot';d.style.background=colorMap[c]||'#ccc';d.title=c;d.onclick=()=>{d.classList.toggle('active');sel.color.has(c)?sel.color.delete(c):sel.color.add(c);render()};fc.appendChild(d)});
+const fi=document.getElementById('fFinish');
+allFinish.forEach(v=>{const b=document.createElement('button');b.className='mini-chip';b.textContent=v;b.onclick=()=>{b.classList.toggle('active');sel.finish.has(v)?sel.finish.delete(v):sel.finish.add(v);render()};fi.appendChild(b)});
+const fce=document.getElementById('fCert');
+allCert.forEach(v=>{const l=document.createElement('label');l.innerHTML=`<input type="checkbox" onchange="sel.cert.has('${v}')?sel.cert.delete('${v}'):sel.cert.add('${v}');render()"> ${v}`;fce.appendChild(l)});
+const fu=document.getElementById('fUse');
+allUse.forEach(v=>{const b=document.createElement('button');b.className='tpill';b.textContent=v;b.onclick=()=>{b.classList.toggle('active');sel.use.has(v)?sel.use.delete(v):sel.use.add(v);render()};fu.appendChild(b)});
+const fb=document.getElementById('fBrand');
+allBrand.forEach(v=>{const l=document.createElement('label');l.innerHTML=`<input type="checkbox" onchange="sel.brand.has('${v}')?sel.brand.delete('${v}'):sel.brand.add('${v}');render()"> ${v}`;fb.appendChild(l)});
+
+function setView(mode,btn){viewMode=mode;document.querySelectorAll('.vt-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render()}
+
+function render(){
+  const q=(document.getElementById('search').value||'').toLowerCase();
+  const co2=parseFloat(document.getElementById('rCo2').value);
+  const price=parseFloat(document.getElementById('rPrice').value);
+  const lead=parseInt(document.getElementById('rLead').value);
+  document.getElementById('rCo2V').textContent='≤ '+co2+' kg/m²';
+  document.getElementById('rPriceV').textContent='≤ €'+price;
+  document.getElementById('rLeadV').textContent='≤ '+lead+' days';
+  const f=materials.filter(m=>{
+    if(q&&!m.name.toLowerCase().includes(q)&&!m.type.includes(q)&&!m.brand.toLowerCase().includes(q))return false;
+    if(sel.type.size&&!sel.type.has(m.type))return false;
+    if(sel.fire.size&&!sel.fire.has(m.fire))return false;
+    if(sel.finish.size&&!sel.finish.has(m.finish))return false;
+    if(sel.cert.size&&!m.cert.some(c=>sel.cert.has(c)))return false;
+    if(sel.brand.size&&!sel.brand.has(m.brand))return false;
+    if(sel.color.size&&!sel.color.has(m.colorFamily))return false;
+    if(sel.use.size&&!sel.use.has(m.use)&&!(m.use==='both'&&(sel.use.has('indoor')||sel.use.has('outdoor'))))return false;
+    if(m.co2>co2)return false;
+    if(m.price>price)return false;
+    if(m.leadDays>lead)return false;
+    return true;
+  });
+  document.getElementById('count').textContent=f.length+' results';
+  const r=document.getElementById('results');
+  if(viewMode==='grid'){
+    r.innerHTML=`<div class="grid-view">${f.length?f.map(m=>`<a href="/10-product" class="g-card">
+      <div class="g-swatch" style="background:${m.color}"><div class="badges">${m.cert.map(c=>`<span class="fbadge">${c}</span>`).join('')}</div></div>
+      <div class="g-body"><h3>${m.name}</h3><div class="gbrand">${m.brand}</div>
+      <div class="gmeta"><span>${m.type}</span><span>${m.finish}</span><span>${m.fire}</span><span>CO₂ ${m.co2}</span><span>${m.use}</span></div>
+      <div class="gfoot"><span class="gprice">€${m.price}</span><span class="glead">${m.leadDays}d</span></div></div>
+    </a>`).join(''):'<p class="no-results">No materials match.</p>'}</div>`;
+  } else {
+    r.innerHTML=`<div class="table-view"><table><thead><tr><th>Material</th><th>Brand</th><th>Type</th><th></th><th>Finish</th><th>Fire</th><th>CO₂</th><th>Cert</th><th>Use</th><th>Lead</th><th>Price</th></tr></thead><tbody>${f.length?f.map(m=>`<tr onclick="window.location='/10-product'" style="cursor:pointer">
+      <td><strong>${m.name}</strong></td><td>${m.brand}</td><td>${m.type}</td><td><span class="tswatch" style="background:${m.color}"></span></td><td>${m.finish}</td><td>${m.fire}</td><td>${m.co2}</td><td><span class="tcert">${m.cert.join(', ')}</span></td><td>${m.use}</td><td>${m.leadDays}d</td><td class="tprice">€${m.price}</td>
+    </tr>`).join(''):'<tr><td colspan="11" class="no-results">No materials match.</td></tr>'}</tbody></table></div>`;
+  }
+}
+
+function resetAll(){for(const s of Object.values(sel))s.clear();document.querySelectorAll('.type-btn,.mini-chip,.tpill,.cdot').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.cb-col input,.fs-scroll input[type=checkbox]').forEach(i=>i.checked=false);document.getElementById('rCo2').value=20;document.getElementById('rPrice').value=350;document.getElementById('rLead').value=40;document.getElementById('search').value='';render()}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Materials Marketplace — Settings</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;background:#fafaf8;color:#1a1a1a}
+a{text-decoration:none;color:inherit}
+.top-nav{display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:56px;background:#fff;border-bottom:1px solid #e8e8e6;position:sticky;top:0;z-index:100}
+.top-nav .logo{font-size:15px;font-weight:600;letter-spacing:-.5px}
+.top-nav .logo span{color:#999}
+.top-nav nav{display:flex;gap:32px}
+.top-nav nav a{font-size:13px;color:#888;transition:color .15s}
+.top-nav nav a:hover,.top-nav nav a.active{color:#1a1a1a}
+.top-nav .nav-right{display:flex;align-items:center;gap:20px}
+.top-nav .nav-right a{font-size:13px;color:#888}
+.mono{font-family:'IBM Plex Mono',monospace}
+.page-wrap{max-width:720px;margin:0 auto;padding:48px 24px}
+.page-wrap h1{font-size:22px;font-weight:500;margin-bottom:4px}
+.page-wrap .sub{font-size:12px;color:#999;margin-bottom:32px}
+.tabs{display:flex;gap:0;border-bottom:2px solid #e8e8e6;margin-bottom:32px}
+.tab{padding:10px 20px;font-size:12px;color:#999;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tab:hover{color:#1a1a1a}
+.tab.active{color:#1a1a1a;border-bottom-color:#1a1a1a}
+.card{background:#fff;border:1px solid #e8e8e6;border-radius:8px;padding:28px;margin-bottom:20px}
+.card h3{font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;color:#999;margin-bottom:16px}
+.setting-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f0f0ee}
+.setting-row:last-child{border-bottom:none}
+.setting-row .label{font-size:13px}
+.setting-row .desc{font-size:11px;color:#999}
+.toggle{width:40px;height:22px;background:#ddd;border-radius:11px;position:relative;cursor:pointer;transition:background .2s}
+.toggle.on{background:#1a1a1a}
+.toggle::after{content:'';width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;top:2px;left:2px;transition:left .2s}
+.toggle.on::after{left:20px}
+.select-sm{padding:6px 12px;border:1px solid #ddd;border-radius:6px;font-size:12px;font-family:inherit;background:#fff}
+.select-sm:focus{outline:none;border-color:#1a1a1a}
+.btn-danger{padding:10px 20px;background:#fff;border:1px solid #e44;color:#c44;border-radius:6px;font-size:12px;font-family:inherit;cursor:pointer;margin-top:8px}
+.btn-danger:hover{background:#fef5f5}
+</style>
+</head>
+<body>
+<header class="top-nav">
+  <a href="/10-home" class="logo">materia<span>.io</span></a>
+  <nav>
+    <a href="/10-materials">Materials</a>
+    <a href="/10-compare">Compare</a>
+    <a href="/10-cart">Quotes</a>
+    <a href="/10-account" class="active">Account</a>
+  </nav>
+  <div class="nav-right"><a href="/10-favorites">♡</a><a href="/10-account">Profile</a></div>
+</header>
+<div class="page-wrap">
+  <h1>Settings</h1>
+  <p class="sub">Manage your preferences</p>
+
+  <div class="tabs">
+    <a href="/10-account" class="tab">Profile</a>
+    <a href="/10-favorites" class="tab">Favorites</a>
+    <a href="/10-orders" class="tab">Orders</a>
+    <a href="/10-settings" class="tab active">Settings</a>
+  </div>
+
+  <div class="card">
+    <h3 class="mono">Notifications</h3>
+    <div class="setting-row">
+      <div><div class="label">Quote updates</div><div class="desc">Get notified when quotes are responded to</div></div>
+      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="setting-row">
+      <div><div class="label">New materials</div><div class="desc">Weekly digest of new products in your categories</div></div>
+      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="setting-row">
+      <div><div class="label">Price changes</div><div class="desc">Alerts when favorited materials change price</div></div>
+      <div class="toggle" onclick="this.classList.toggle('on')"></div>
+    </div>
+    <div class="setting-row">
+      <div><div class="label">Marketing emails</div><div class="desc">Product news and platform updates</div></div>
+      <div class="toggle" onclick="this.classList.toggle('on')"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="mono">Display Preferences</h3>
+    <div class="setting-row">
+      <div><div class="label">Default view</div><div class="desc">Material listing layout</div></div>
+      <select class="select-sm"><option>Grid</option><option>Table</option></select>
+    </div>
+    <div class="setting-row">
+      <div><div class="label">Currency</div><div class="desc">Display prices in</div></div>
+      <select class="select-sm"><option>EUR (€)</option><option>NOK (kr)</option><option>SEK (kr)</option><option>GBP (£)</option></select>
+    </div>
+    <div class="setting-row">
+      <div><div class="label">Units</div><div class="desc">Measurement system</div></div>
+      <select class="select-sm"><option>Metric (m², kg)</option><option>Imperial (ft², lb)</option></select>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3 class="mono">Account</h3>
+    <div class="setting-row">
+      <div><div class="label">Change password</div><div class="desc">Update your account password</div></div>
+      <button class="select-sm" style="cursor:pointer">Change</button>
+    </div>
+    <div class="setting-row">
+      <div><div class="label">Export data</div><div class="desc">Download all your account data</div></div>
+      <button class="select-sm" style="cursor:pointer">Export</button>
+    </div>
+  </div>
+  <button class="btn-danger" onclick="alert('Account deletion requested')">Delete Account</button>
+</div>
+</body>
+</html>

@@ -21,6 +21,17 @@
     { "source": "/6-compare", "destination": "/6-compare.html" },
     { "source": "/6-cart", "destination": "/6-cart.html" },
     { "source": "/6-orders", "destination": "/6-orders.html" },
+    { "source": "/10-home", "destination": "/10-home.html" },
+    { "source": "/10-materials", "destination": "/10-materials.html" },
+    { "source": "/10-product", "destination": "/10-product.html" },
+    { "source": "/10-login", "destination": "/10-login.html" },
+    { "source": "/10-register", "destination": "/10-register.html" },
+    { "source": "/10-account", "destination": "/10-account.html" },
+    { "source": "/10-settings", "destination": "/10-settings.html" },
+    { "source": "/10-favorites", "destination": "/10-favorites.html" },
+    { "source": "/10-compare", "destination": "/10-compare.html" },
+    { "source": "/10-cart", "destination": "/10-cart.html" },
+    { "source": "/10-orders", "destination": "/10-orders.html" },
     { "source": "/", "destination": "/1.html" }
   ]
 }
