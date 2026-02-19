@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MaterialSource — Product Detail</title>
+<link rel="stylesheet" href="/shared-6.css">
+<style>
+.breadcrumb{font-size:12px;color:#999;margin-bottom:24px}
+.breadcrumb a{color:#999}.breadcrumb a:hover{color:#1a1a1a}
+.product-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-bottom:48px}
+.product-images .main-img{width:100%;height:320px;border-radius:8px;position:relative}
+.product-images .thumbs{display:flex;gap:8px;margin-top:12px}
+.product-images .thumb{width:72px;height:52px;border-radius:6px;border:2px solid transparent;cursor:pointer;opacity:.7}
+.product-images .thumb:hover,.product-images .thumb.active{opacity:1;border-color:#1a1a1a}
+.product-info h1{font-size:28px;font-weight:500;margin-bottom:4px}
+.product-info .brand{font-size:13px;color:#999;margin-bottom:16px}
+.product-info .price-row{display:flex;align-items:baseline;gap:12px;margin-bottom:24px}
+.product-info .price-row .price{font-size:32px;font-weight:600}
+.product-info .price-row .unit{font-size:13px;color:#999}
+.product-info .certs{display:flex;gap:6px;margin-bottom:20px}
+.product-info .actions{display:flex;gap:12px;margin-bottom:32px}
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#e8e8e6;border:1px solid #e8e8e6;border-radius:8px;overflow:hidden;margin-bottom:20px}
+.spec-item{background:#fff;padding:14px 16px}
+.spec-item .label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#999;margin-bottom:4px}
+.spec-item .value{font-size:14px;font-weight:500}
+.spec-item .value.green{color:#2e7d32}
+.spec-item .value.amber{color:#e65100}
+.spec-item .value.red{color:#c62828}
+
+.detail-section{margin-bottom:32px}
+.detail-section h2{font-size:16px;font-weight:500;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid #e8e8e6}
+
+.co2-bar{height:8px;background:#e8e8e6;border-radius:4px;overflow:hidden;margin-bottom:8px}
+.co2-bar .fill{height:100%;border-radius:4px;transition:width .3s}
+.co2-note{font-size:11px;color:#999}
+
+.similar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:12px}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="/6-home" class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>MaterialSource</a>
+  <div class="nav-links"><a href="/6-materials">Materials</a><a href="/6-compare">Compare</a><a href="/6-cart">Quotes</a></div>
+  <div class="nav-right"><a href="/6-favorites">♡</a><a href="/6-account" class="avatar-sm">R</a></div>
+</nav>
+
+<div class="page-container wide">
+  <div class="breadcrumb"><a href="/6-materials">Materials</a> / <span id="breadName">Loading...</span></div>
+
+  <div class="product-layout">
+    <div class="product-images">
+      <div class="main-img" id="mainImg" style="border-radius:8px"></div>
+      <div class="thumbs">
+        <div class="thumb active" id="t1"></div>
+        <div class="thumb" id="t2" style="opacity:.5"></div>
+        <div class="thumb" id="t3" style="opacity:.4"></div>
+      </div>
+    </div>
+    <div class="product-info">
+      <h1 id="pName"></h1>
+      <div class="brand" id="pBrand"></div>
+      <div class="price-row"><span class="price" id="pPrice"></span><span class="unit">/ m²</span></div>
+      <div class="certs" id="pCerts"></div>
+      <div class="actions">
+        <button class="btn btn-primary btn-lg" onclick="alert('Added to quote request')">Add to Quote</button>
+        <button class="btn btn-secondary btn-lg" id="favBtn" onclick="this.textContent=this.textContent.includes('♡')?'♥ Saved':'♡ Save';this.classList.toggle('liked')">♡ Save</button>
+        <button class="btn btn-secondary btn-lg" onclick="location.href='/6-compare'">Compare</button>
+      </div>
+      <div class="spec-grid" id="specGrid"></div>
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <h2>Environmental Impact</h2>
+    <p style="font-size:13px;margin-bottom:12px">CO₂ Emissions: <strong id="co2Val"></strong> kg CO₂e/m²</p>
+    <div class="co2-bar"><div class="fill" id="co2Fill"></div></div>
+    <p class="co2-note">Scale: 0–20 kg CO₂e/m². Lower is better. Data sourced from verified EPD declarations.</p>
+  </div>
+
+  <div class="detail-section">
+    <h2>Technical Specifications</h2>
+    <table class="table">
+      <tbody id="techSpecs"></tbody>
+    </table>
+  </div>
+
+  <div class="detail-section">
+    <h2>Similar Materials</h2>
+    <div class="similar-grid" id="similarGrid"></div>
+  </div>
+</div>
+
+<script src="/data.js"></script>
+<script>
+const params=new URLSearchParams(location.search);
+const name=params.get('m')||'Carrara Marble';
+const m=materials.find(x=>x.name===name)||materials[0];
+const similar=materials.filter(x=>x.type===m.type&&x.name!==m.name).slice(0,4);
+
+document.getElementById('breadName').textContent=m.name;
+document.getElementById('pName').textContent=m.name;
+document.getElementById('pBrand').textContent=m.brand+' · '+m.type.charAt(0).toUpperCase()+m.type.slice(1)+' · '+m.finish;
+document.getElementById('pPrice').textContent='€'+m.price;
+document.getElementById('mainImg').style.background=m.color;
+document.getElementById('mainImg').style.height='320px';
+document.getElementById('t1').style.background=m.color;
+document.getElementById('t2').style.background=m.color;document.getElementById('t2').style.filter='brightness(0.85)';
+document.getElementById('t3').style.background=m.color;document.getElementById('t3').style.filter='brightness(1.15)';
+document.title='MaterialSource — '+m.name;
+
+const certs=document.getElementById('pCerts');
+m.cert.forEach(c=>{certs.innerHTML+=`<span class="badge badge-dark">${c}</span>`});
+
+const co2Pct=Math.min(100,(m.co2/20)*100);
+const co2Color=m.co2<5?'#2e7d32':m.co2<10?'#e65100':'#c62828';
+document.getElementById('co2Val').textContent=m.co2;
+document.getElementById('co2Fill').style.width=co2Pct+'%';
+document.getElementById('co2Fill').style.background=co2Color;
+
+const fireColor=m.fire.startsWith('A')?'green':m.fire==='B'?'amber':'red';
+const specs=[
+  {l:'Fire Class',v:m.fire,c:fireColor},{l:'CO₂',v:m.co2+' kg/m²',c:m.co2<5?'green':m.co2<10?'amber':'red'},
+  {l:'Finish',v:m.finish},{l:'Use',v:m.use},
+  {l:'Lead Time',v:m.leadDays+' days'},{l:'Price',v:'€'+m.price+'/m²'},
+];
+const sg=document.getElementById('specGrid');
+specs.forEach(s=>{sg.innerHTML+=`<div class="spec-item"><div class="label">${s.l}</div><div class="value ${s.c||''}">${s.v}</div></div>`});
+
+const ts=document.getElementById('techSpecs');
+const techData=[
+  ['Material Type',m.type.charAt(0).toUpperCase()+m.type.slice(1)],['Brand',m.brand],['Surface Finish',m.finish],
+  ['Fire Safety Classification','EN 13501-1: Class '+m.fire],['CO₂ Emissions (EPD)',m.co2+' kg CO₂e/m²'],
+  ['Intended Use',m.use==='both'?'Indoor & Outdoor':m.use.charAt(0).toUpperCase()+m.use.slice(1)],
+  ['Lead Time',m.leadDays+' working days'],['Certifications',m.cert.join(', ')],
+  ['Dimensions','600 × 600 mm (standard)'],['Thickness','12 mm'],['Weight','18.5 kg/m²'],
+];
+techData.forEach(r=>{ts.innerHTML+=`<tr><td style="color:#999;width:200px">${r[0]}</td><td>${r[1]}</td></tr>`});
+
+const simG=document.getElementById('similarGrid');
+similar.forEach(s=>{simG.innerHTML+=`<div class="mat-card" onclick="location.href='/6-product?m=${encodeURIComponent(s.name)}'">
+  <div class="swatch-bar" style="background:${s.color}"><div class="badges">${s.cert.map(c=>`<span class="badge">${c}</span>`).join('')}</div></div>
+  <div class="card-body"><h3>${s.name}</h3><div class="type">${s.type} · ${s.finish}</div>
+  <div class="specs"><span>CO₂ ${s.co2}</span><span>Fire ${s.fire}</span></div>
+  <div class="bottom"><span class="price">€${s.price}</span><span class="lead">${s.leadDays}d lead</span></div></div></div>`});
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Space Grotesk',sans-serif;background:#f0f0ee;color:#1a1a1a;min-height:100vh}
+a{text-decoration:none;color:inherit}
+
+/* Top Navigation */
+.topnav{height:56px;background:#1a1a1a;display:flex;align-items:center;padding:0 32px;gap:0;position:sticky;top:0;z-index:100}
+.topnav .logo{font-size:16px;font-weight:600;color:#fff;letter-spacing:-.5px;margin-right:40px;display:flex;align-items:center;gap:8px}
+.topnav .logo svg{width:22px;height:22px}
+.topnav .nav-links{display:flex;gap:4px;flex:1}
+.topnav .nav-links a{color:#888;font-size:13px;font-weight:400;padding:8px 16px;border-radius:6px;transition:all .15s}
+.topnav .nav-links a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.topnav .nav-links a.active{color:#fff;background:rgba(255,255,255,.12)}
+.topnav .nav-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.topnav .nav-right a{color:#888;font-size:13px;padding:8px 12px;border-radius:6px;transition:all .15s}
+.topnav .nav-right a:hover{color:#fff;background:rgba(255,255,255,.08)}
+.topnav .avatar-sm{width:30px;height:30px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;color:#999;font-size:12px;font-weight:500;cursor:pointer;transition:background .15s}
+.topnav .avatar-sm:hover{background:#444}
+
+/* Shared Components */
+.page-container{max-width:1200px;margin:0 auto;padding:40px 36px}
+.page-container.wide{max-width:1440px}
+.page-container.narrow{max-width:640px}
+
+.btn{padding:10px 24px;border:none;border-radius:6px;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:#1a1a1a;color:#fff}
+.btn-primary:hover{background:#333}
+.btn-secondary{background:#fff;color:#1a1a1a;border:1px solid #ddd}
+.btn-secondary:hover{border-color:#999}
+.btn-ghost{background:transparent;color:#666;padding:8px 12px}
+.btn-ghost:hover{color:#1a1a1a;background:rgba(0,0,0,.04)}
+.btn-danger{background:#e74c3c;color:#fff}
+.btn-danger:hover{background:#c0392b}
+.btn-sm{padding:6px 14px;font-size:12px}
+.btn-lg{padding:14px 32px;font-size:15px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+.card{background:#fff;border-radius:8px;border:1px solid #e8e8e6;overflow:hidden}
+.card:hover{transform:translateY(-2px);transition:transform .15s}
+
+.badge{display:inline-flex;padding:3px 8px;border-radius:3px;font-size:10px;letter-spacing:.5px;text-transform:uppercase;font-weight:500}
+.badge-dark{background:#1a1a1a;color:#fff}
+.badge-green{background:#e8f5e9;color:#2e7d32}
+.badge-amber{background:#fff3e0;color:#e65100}
+.badge-red{background:#fce4ec;color:#c62828}
+.badge-grey{background:#f5f5f3;color:#666}
+
+.chip{padding:5px 12px;border:1px solid #ddd;border-radius:20px;font-size:12px;cursor:pointer;background:#fff;transition:all .15s;font-family:inherit}
+.chip:hover{border-color:#888}
+.chip.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+
+.input-group{margin-bottom:20px}
+.input-group label{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#999;margin-bottom:6px;font-weight:400}
+.input-group input,.input-group select,.input-group textarea{width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:6px;font-family:inherit;font-size:13px;background:#fff;transition:border-color .15s;color:#1a1a1a}
+.input-group input:focus,.input-group select:focus,.input-group textarea:focus{outline:none;border-color:#1a1a1a}
+.input-group textarea{resize:vertical;min-height:80px}
+
+.section-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#999;margin-bottom:16px;font-weight:400}
+
+.divider{border:none;border-top:1px solid #e8e8e6;margin:24px 0}
+
+.table{width:100%;border-collapse:collapse}
+.table th{text-align:left;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#999;font-weight:400;padding:10px 12px;border-bottom:1px solid #e8e8e6}
+.table td{padding:12px;font-size:13px;border-bottom:1px solid #f0f0ee}
+.table tr:hover td{background:#fafaf8}
+
+.toggle-row{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#555;padding:10px 0}
+.toggle{width:36px;height:20px;background:#ddd;border-radius:10px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.toggle.active{background:#1a1a1a}
+.toggle::after{content:'';position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:2px;left:2px;transition:left .2s}
+.toggle.active::after{left:18px}
+
+.empty-state{text-align:center;padding:80px 20px;color:#999}
+.empty-state .icon{font-size:48px;margin-bottom:16px;opacity:.4}
+.empty-state h3{font-size:18px;font-weight:500;color:#666;margin-bottom:8px}
+.empty-state p{font-size:13px;margin-bottom:24px}
+
+/* Material Card (shared) */
+.mat-card{background:#fff;border-radius:8px;overflow:hidden;border:1px solid #e8e8e6;transition:transform .15s;cursor:pointer}
+.mat-card:hover{transform:translateY(-2px)}
+.mat-card .swatch-bar{height:56px;width:100%;position:relative}
+.mat-card .swatch-bar .badges{position:absolute;top:8px;right:8px;display:flex;gap:4px}
+.mat-card .swatch-bar .badge{background:rgba(0,0,0,.6);color:#fff;font-size:9px;padding:2px 6px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase}
+.mat-card .card-body{padding:14px}
+.mat-card h3{font-size:13px;font-weight:500;margin-bottom:3px}
+.mat-card .type{font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.mat-card .specs{font-size:11px;color:#777;display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.mat-card .specs span{background:#f5f5f3;padding:2px 6px;border-radius:3px}
+.mat-card .bottom{display:flex;justify-content:space-between;align-items:baseline}
+.mat-card .price{font-size:16px;font-weight:600}
+.mat-card .lead{font-size:10px;color:#999}
+.mat-card .fav-btn{position:absolute;top:8px;left:8px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);border:none;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.mat-card .fav-btn:hover{background:#fff;transform:scale(1.1)}
+.mat-card .fav-btn.liked{color:#e74c3c}
+
+.no-results{color:#999;font-style:italic;grid-column:1/-1}

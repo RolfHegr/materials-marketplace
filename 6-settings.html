@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MaterialSource — Settings</title>
+<link rel="stylesheet" href="/shared-6.css">
+<style>
+.account-layout{display:grid;grid-template-columns:220px 1fr;gap:32px}
+.sidebar a{display:block;padding:10px 16px;font-size:13px;color:#666;border-radius:6px;margin-bottom:2px}
+.sidebar a:hover{background:#fff;color:#1a1a1a}
+.sidebar a.active{background:#fff;color:#1a1a1a;font-weight:500;border:1px solid #e8e8e6}
+.section-card{background:#fff;border:1px solid #e8e8e6;border-radius:8px;padding:24px;margin-bottom:20px}
+.section-card h3{font-size:14px;font-weight:500;margin-bottom:16px}
+.setting-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #f0f0ee}
+.setting-row:last-child{border-bottom:none}
+.setting-row .left{flex:1}
+.setting-row .left .title{font-size:13px;font-weight:500;margin-bottom:2px}
+.setting-row .left .desc{font-size:12px;color:#999}
+.chip-select{display:flex;gap:6px}
+.chip-select .chip{font-size:12px}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="/6-home" class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>MaterialSource</a>
+  <div class="nav-links"><a href="/6-materials">Materials</a><a href="/6-compare">Compare</a><a href="/6-cart">Quotes</a></div>
+  <div class="nav-right"><a href="/6-favorites">♡</a><a href="/6-account" class="avatar-sm">R</a></div>
+</nav>
+
+<div class="page-container wide">
+  <div class="account-layout">
+    <div class="sidebar">
+      <a href="/6-account">Profile</a>
+      <a href="/6-settings" class="active">Settings</a>
+      <a href="/6-favorites">Favorites</a>
+      <a href="/6-orders">Orders & Quotes</a>
+      <a href="/6-login" style="color:#c62828;margin-top:24px">Log Out</a>
+    </div>
+    <div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:24px">Settings</h1>
+
+      <div class="section-card">
+        <h3>Display Preferences</h3>
+        <div class="setting-row">
+          <div class="left"><div class="title">Unit System</div><div class="desc">Choose between metric and imperial measurements</div></div>
+          <div class="chip-select">
+            <button class="chip active" onclick="this.classList.add('active');this.nextElementSibling.classList.remove('active')">Metric</button>
+            <button class="chip" onclick="this.classList.add('active');this.previousElementSibling.classList.remove('active')">Imperial</button>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="left"><div class="title">Currency</div><div class="desc">Default currency for price display</div></div>
+          <select style="padding:6px 12px;border:1px solid #ddd;border-radius:6px;font-family:inherit;font-size:13px">
+            <option>EUR (€)</option><option>NOK (kr)</option><option>SEK (kr)</option><option>DKK (kr)</option><option>GBP (£)</option><option>USD ($)</option>
+          </select>
+        </div>
+        <div class="setting-row">
+          <div class="left"><div class="title">Language</div><div class="desc">Interface language</div></div>
+          <select style="padding:6px 12px;border:1px solid #ddd;border-radius:6px;font-family:inherit;font-size:13px">
+            <option>English</option><option>Norsk</option><option>Svenska</option><option>Dansk</option><option>Deutsch</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h3>Notifications</h3>
+        <div class="setting-row">
+          <div class="left"><div class="title">Quote Updates</div><div class="desc">Get notified when suppliers respond to your quotes</div></div>
+          <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+        </div>
+        <div class="setting-row">
+          <div class="left"><div class="title">New Materials</div><div class="desc">Weekly digest of new materials matching your interests</div></div>
+          <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+        </div>
+        <div class="setting-row">
+          <div class="left"><div class="title">Price Changes</div><div class="desc">Alerts when saved materials change price</div></div>
+          <div class="toggle" onclick="this.classList.toggle('active')"></div>
+        </div>
+        <div class="setting-row">
+          <div class="left"><div class="title">Marketing Emails</div><div class="desc">Product updates and platform news</div></div>
+          <div class="toggle" onclick="this.classList.toggle('active')"></div>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h3>Account</h3>
+        <div class="setting-row">
+          <div class="left"><div class="title">Change Password</div><div class="desc">Update your account password</div></div>
+          <button class="btn btn-secondary btn-sm">Change</button>
+        </div>
+        <div class="setting-row">
+          <div class="left"><div class="title">Two-Factor Authentication</div><div class="desc">Add an extra layer of security</div></div>
+          <button class="btn btn-secondary btn-sm">Enable</button>
+        </div>
+        <div class="setting-row">
+          <div class="left"><div class="title">Delete Account</div><div class="desc">Permanently delete your account and all data</div></div>
+          <button class="btn btn-danger btn-sm">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

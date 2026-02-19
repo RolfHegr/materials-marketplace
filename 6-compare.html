@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MaterialSource — Compare</title>
+<link rel="stylesheet" href="/shared-6.css">
+<style>
+.compare-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
+.compare-header h1{font-size:22px;font-weight:500}
+.compare-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e8e8e6;border-radius:8px;overflow:hidden}
+.compare-table th{background:#fafaf8;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:#999;font-weight:400;padding:12px 16px;text-align:left;border-bottom:1px solid #e8e8e6}
+.compare-table td{padding:14px 16px;border-bottom:1px solid #f0f0ee;font-size:13px;vertical-align:top}
+.compare-table .label-col{color:#999;width:160px;font-size:12px}
+.compare-table .mat-header{text-align:center;padding:20px 16px}
+.compare-table .swatch{width:100%;height:48px;border-radius:6px;margin-bottom:10px}
+.compare-table .mat-name{font-size:14px;font-weight:500;margin-bottom:2px}
+.compare-table .mat-brand{font-size:11px;color:#999}
+.compare-table td.best{background:#f0faf0;font-weight:500;color:#2e7d32}
+.compare-table .remove-btn{font-size:11px;color:#999;cursor:pointer;margin-top:8px;display:inline-block}
+.compare-table .remove-btn:hover{color:#c62828}
+.compare-table .price-cell{font-size:18px;font-weight:600}
+.add-col{text-align:center;vertical-align:middle;color:#999;cursor:pointer;border-left:1px dashed #e8e8e6}
+.add-col:hover{background:#fafaf8}
+.compare-actions{margin-top:24px;display:flex;gap:12px}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="/6-home" class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>MaterialSource</a>
+  <div class="nav-links"><a href="/6-materials">Materials</a><a href="/6-compare" class="active">Compare</a><a href="/6-cart">Quotes</a></div>
+  <div class="nav-right"><a href="/6-favorites">♡</a><a href="/6-account" class="avatar-sm">R</a></div>
+</nav>
+
+<div class="page-container wide">
+  <div class="compare-header">
+    <h1>Compare Materials</h1>
+    <button class="btn btn-secondary btn-sm">Export PDF</button>
+  </div>
+  <div style="overflow-x:auto">
+    <table class="compare-table" id="compareTable"></table>
+  </div>
+  <div class="compare-actions">
+    <button class="btn btn-primary" onclick="alert('All added to quote')">Add All to Quote</button>
+    <button class="btn btn-secondary">Share Comparison</button>
+  </div>
+</div>
+
+<script src="/data.js"></script>
+<script>
+const compared=[materials[0],materials[2],materials[4]];
+const rows=[
+  {label:'',render:m=>`<div class="mat-header"><div class="swatch" style="background:${m.color}"></div><div class="mat-name">${m.name}</div><div class="mat-brand">${m.brand}</div><span class="remove-btn">✕ Remove</span></div>`},
+  {label:'Type',render:m=>m.type},
+  {label:'Price',render:m=>`<span class="price-cell">€${m.price}</span>/m²`},
+  {label:'Fire Class',render:m=>m.fire,best:ms=>ms.reduce((a,b)=>a.fire<b.fire?a:b).name},
+  {label:'CO₂ Emissions',render:m=>m.co2+' kg/m²',best:ms=>ms.reduce((a,b)=>a.co2<b.co2?a:b).name},
+  {label:'Surface Finish',render:m=>m.finish},
+  {label:'Use',render:m=>m.use==='both'?'Indoor & Outdoor':m.use},
+  {label:'Lead Time',render:m=>m.leadDays+' days',best:ms=>ms.reduce((a,b)=>a.leadDays<b.leadDays?a:b).name},
+  {label:'Certifications',render:m=>m.cert.map(c=>`<span class="badge badge-dark" style="margin:2px">${c}</span>`).join(' ')},
+  {label:'Color Family',render:m=>`<span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${m.color};vertical-align:middle;margin-right:6px"></span>${m.colorFamily}`},
+];
+
+const t=document.getElementById('compareTable');
+rows.forEach((r,i)=>{
+  const tr=document.createElement('tr');
+  if(i===0){
+    tr.innerHTML=`<th></th>${compared.map(m=>`<th>${r.render(m)}</th>`).join('')}<th class="add-col" style="width:80px;vertical-align:middle;cursor:pointer" onclick="location.href='/6-materials'">+ Add</th>`;
+  } else {
+    const bestName=r.best?r.best(compared):null;
+    tr.innerHTML=`<td class="label-col">${r.label}</td>${compared.map(m=>`<td class="${bestName===m.name?'best':''}">${r.render(m)}</td>`).join('')}<td class="add-col"></td>`;
+  }
+  t.appendChild(tr);
+});
+</script>
+</body>
+</html>

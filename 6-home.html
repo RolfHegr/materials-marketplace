@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MaterialSource — Home</title>
+<link rel="stylesheet" href="/shared-6.css">
+<style>
+.hero{background:#1a1a1a;color:#fff;padding:80px 36px;text-align:center}
+.hero h1{font-size:42px;font-weight:300;margin-bottom:16px;letter-spacing:-1px}
+.hero h1 strong{font-weight:600}
+.hero p{font-size:16px;color:#999;max-width:520px;margin:0 auto 32px;line-height:1.6}
+.hero .search-box{max-width:480px;margin:0 auto;position:relative}
+.hero .search-box input{width:100%;padding:14px 20px 14px 44px;border:1px solid #333;border-radius:8px;background:#2a2a2a;color:#fff;font-family:inherit;font-size:14px}
+.hero .search-box input::placeholder{color:#666}
+.hero .search-box input:focus{outline:none;border-color:#555}
+.hero .search-box svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#666}
+.hero .stats{display:flex;justify-content:center;gap:48px;margin-top:40px}
+.hero .stat{text-align:center}
+.hero .stat .num{font-size:28px;font-weight:600}
+.hero .stat .lbl{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+
+.categories{padding:60px 36px}
+.categories .inner{max-width:1200px;margin:0 auto}
+.categories h2{font-size:22px;font-weight:500;margin-bottom:32px;text-align:center}
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.cat-card{background:#fff;border:1px solid #e8e8e6;border-radius:8px;padding:24px 16px;text-align:center;cursor:pointer;transition:all .15s}
+.cat-card:hover{transform:translateY(-2px);border-color:#ccc}
+.cat-card .icon{font-size:28px;margin-bottom:12px}
+.cat-card h3{font-size:13px;font-weight:500;margin-bottom:4px}
+.cat-card p{font-size:11px;color:#999}
+
+.featured{padding:60px 36px;background:#fff}
+.featured .inner{max-width:1200px;margin:0 auto}
+.featured h2{font-size:22px;font-weight:500;margin-bottom:8px}
+.featured .sub{font-size:13px;color:#999;margin-bottom:32px}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:12px}
+
+.value-props{padding:60px 36px}
+.value-props .inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.vp{text-align:center;padding:24px}
+.vp .icon{width:48px;height:48px;border-radius:50%;background:#1a1a1a;color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:20px}
+.vp h3{font-size:14px;font-weight:500;margin-bottom:8px}
+.vp p{font-size:12px;color:#777;line-height:1.6}
+
+.cta-section{background:#1a1a1a;color:#fff;padding:60px 36px;text-align:center}
+.cta-section h2{font-size:26px;font-weight:400;margin-bottom:12px}
+.cta-section p{color:#888;margin-bottom:24px;font-size:14px}
+.cta-section .btn-primary{background:#fff;color:#1a1a1a}
+.cta-section .btn-primary:hover{background:#e8e8e6}
+
+footer{background:#fff;border-top:1px solid #e8e8e6;padding:32px 36px;text-align:center;font-size:11px;color:#999}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="/6-home" class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    MaterialSource
+  </a>
+  <div class="nav-links">
+    <a href="/6-materials">Materials</a>
+    <a href="/6-compare">Compare</a>
+    <a href="/6-cart">Quotes</a>
+  </div>
+  <div class="nav-right">
+    <a href="/6-favorites">♡</a>
+    <a href="/6-account" class="avatar-sm">R</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Specify materials<br>with <strong>confidence</strong></h1>
+  <p>The curated platform for architects and designers. Compare specs, verify certifications, and request quotes — all in one place.</p>
+  <div class="search-box">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <input type="text" placeholder="Search materials, brands, certifications..." onclick="location.href='/6-materials'">
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="num">2,400+</div><div class="lbl">Materials</div></div>
+    <div class="stat"><div class="num">180</div><div class="lbl">Brands</div></div>
+    <div class="stat"><div class="num">100%</div><div class="lbl">EPD Verified</div></div>
+  </div>
+</section>
+
+<section class="categories">
+  <div class="inner">
+    <h2>Browse by Category</h2>
+    <div class="cat-grid" id="catGrid"></div>
+  </div>
+</section>
+
+<section class="featured">
+  <div class="inner">
+    <h2>Featured Materials</h2>
+    <p class="sub">Hand-picked selections trending among Nordic architects this month</p>
+    <div class="feat-grid" id="featGrid"></div>
+  </div>
+</section>
+
+<section class="value-props">
+  <div class="inner">
+    <div class="vp">
+      <div class="icon">⚡</div>
+      <h3>Fast Specification</h3>
+      <p>Filter by fire class, CO₂, certifications and more. Find the right material in seconds, not hours.</p>
+    </div>
+    <div class="vp">
+      <div class="icon">📊</div>
+      <h3>Side-by-Side Compare</h3>
+      <p>Compare up to 4 materials across every spec. Export comparison sheets for client presentations.</p>
+    </div>
+    <div class="vp">
+      <div class="icon">📋</div>
+      <h3>Streamlined Quotes</h3>
+      <p>Request quotes from multiple suppliers at once. Track status and manage your procurement in one dashboard.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <h2>Ready to streamline your material selection?</h2>
+  <p>Join 1,200+ architecture firms already using MaterialSource</p>
+  <a href="/6-register" class="btn btn-primary btn-lg">Create Free Account</a>
+</section>
+
+<footer>© 2026 MaterialSource. Built for architects, by architects.</footer>
+
+<script src="/data.js"></script>
+<script>
+const cats = [
+  {icon:'🧱',name:'Wall',desc:'Tiles, cladding, panels'},
+  {icon:'🪵',name:'Floor',desc:'Wood, stone, vinyl'},
+  {icon:'☁️',name:'Ceiling',desc:'Acoustic, panels, grids'},
+  {icon:'🏗️',name:'Facade',desc:'Metal, ceramic, stone'},
+  {icon:'🏠',name:'Roof',desc:'Metal, green, membrane'},
+  {icon:'🔥',name:'Insulation',desc:'Mineral, bio-based'},
+];
+const cg=document.getElementById('catGrid');
+cats.forEach(c=>{cg.innerHTML+=`<div class="cat-card" onclick="location.href='/6-materials'"><div class="icon">${c.icon}</div><h3>${c.name}</h3><p>${c.desc}</p></div>`});
+
+const fg=document.getElementById('featGrid');
+materials.slice(0,8).forEach(m=>{fg.innerHTML+=`<div class="mat-card" onclick="location.href='/6-product?m=${encodeURIComponent(m.name)}'">
+  <div class="swatch-bar" style="background:${m.color}"><div class="badges">${m.cert.map(c=>`<span class="badge">${c}</span>`).join('')}</div></div>
+  <div class="card-body"><h3>${m.name}</h3><div class="type">${m.type} · ${m.finish}</div>
+  <div class="specs"><span>CO₂ ${m.co2}</span><span>Fire ${m.fire}</span></div>
+  <div class="bottom"><span class="price">€${m.price}</span><span class="lead">${m.leadDays}d lead</span></div></div></div>`});
+</script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MaterialSource — Materials</title>
+<link rel="stylesheet" href="/shared-6.css">
+<style>
+.layout{display:flex;min-height:calc(100vh - 56px)}
+.filter-panel{width:280px;background:#fff;border-right:1px solid #e0e0de;padding:24px 20px;overflow-y:auto;flex-shrink:0}
+.filter-panel h2{font-size:14px;font-weight:600;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+.filter-panel h2 span{font-size:11px;color:#999;font-weight:400;cursor:pointer}
+.filter-section{margin-bottom:20px;border-bottom:1px solid #eee;padding-bottom:16px}
+.filter-section:last-child{border-bottom:none}
+.filter-section h3{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#999;margin-bottom:12px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:400}
+.filter-section h3::after{content:'−';font-size:14px}
+.filter-section.collapsed h3::after{content:'+'}
+.filter-section.collapsed .filter-body{display:none}
+.chip-group{display:flex;flex-wrap:wrap;gap:6px}
+.checkbox-group{display:flex;flex-direction:column;gap:6px}
+.checkbox-group label{font-size:12px;display:flex;align-items:center;gap:8px;cursor:pointer;color:#555}
+.checkbox-group label:hover{color:#1a1a1a}
+.checkbox-group input[type=checkbox]{accent-color:#1a1a1a}
+.range-slider{width:100%}
+.range-slider input[type=range]{width:100%;accent-color:#1a1a1a;margin:8px 0}
+.range-slider .range-labels{display:flex;justify-content:space-between;font-size:11px;color:#999}
+.color-swatches{display:flex;gap:8px;flex-wrap:wrap}
+.color-swatch{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:border-color .15s}
+.color-swatch:hover,.color-swatch.active{border-color:#1a1a1a}
+.toggle-row2{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#555;margin-bottom:8px}
+.main{flex:1;padding:32px 36px;overflow-y:auto}
+.top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.top-bar h1{font-weight:500;font-size:22px}
+.results-meta{font-size:12px;color:#999;display:flex;gap:16px;align-items:center}
+.search-input{padding:8px 14px;border:1px solid #ddd;border-radius:6px;font-family:inherit;font-size:13px;width:240px}
+.search-input:focus{outline:none;border-color:#1a1a1a}
+.active-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.active-tag{padding:4px 10px;background:#1a1a1a;color:#fff;border-radius:12px;font-size:11px;display:flex;align-items:center;gap:6px}
+.active-tag span{cursor:pointer;opacity:.6}
+.active-tag span:hover{opacity:1}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:12px}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="/6-home" class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    MaterialSource
+  </a>
+  <div class="nav-links">
+    <a href="/6-materials" class="active">Materials</a>
+    <a href="/6-compare">Compare</a>
+    <a href="/6-cart">Quotes</a>
+  </div>
+  <div class="nav-right">
+    <a href="/6-favorites">♡</a>
+    <a href="/6-account" class="avatar-sm">R</a>
+  </div>
+</nav>
+
+<div class="layout">
+<aside class="filter-panel">
+  <h2>Filters <span onclick="resetAll()">Reset all</span></h2>
+  <div class="filter-section"><h3 onclick="this.parentElement.classList.toggle('collapsed')">Material Type</h3><div class="filter-body chip-group" id="typeChips"></div></div>
+  <div class="filter-section"><h3 onclick="this.parentElement.classList.toggle('collapsed')">Fire Safety Class</h3><div class="filter-body checkbox-group" id="fireChecks"></div></div>
+  <div class="filter-section"><h3 onclick="this.parentElement.classList.toggle('collapsed')">CO₂ Emissions</h3><div class="filter-body range-slider"><input type="range" id="co2Max" min="0" max="20" step="0.5" value="20" oninput="updateCo2Label();render()"><div class="range-labels"><span>0 kg/m²</span><span id="co2Label">≤ 20 kg/m²</span></div></div></div>
+  <div class="filter-section"><h3 onclick="this.parentElement.classList.toggle('collapsed')">Price Range</h3><div class="filter-body range-slider"><input type="range" id="priceMax" min="0" max="350" step="5" value="350" oninput="updatePriceLabel();render()"><div class="range-labels"><span>€0</span><span id="priceLabel">≤ €350</span></div></div></div>
+  <div class="filter-section"><h3 onclick="this.parentElement.classList.toggle('collapsed')">Color Family</h3><div class="filter-body color-swatches" id="colorSwatches"></div></div>
+  <div class="filter-section"><h3 onclick="this.parentElement.classList.toggle('collapsed')">Surface Finish</h3><div class="filter-body chip-group" id="finishChips"></div></div>
+  <div class="filter-section"><h3 onclick="this.parentElement.classList.toggle('collapsed')">Certifications</h3><div class="filter-body checkbox-group" id="certChecks"></div></div>
+  <div class="filter-section"><h3 onclick="this.parentElement.classList.toggle('collapsed')">Use</h3><div class="filter-body">
+    <div class="toggle-row2">Indoor<div class="toggle active" id="togIndoor" onclick="this.classList.toggle('active');render()"></div></div>
+    <div class="toggle-row2">Outdoor<div class="toggle active" id="togOutdoor" onclick="this.classList.toggle('active');render()"></div></div>
+  </div></div>
+  <div class="filter-section"><h3 onclick="this.parentElement.classList.toggle('collapsed')">Lead Time</h3><div class="filter-body range-slider"><input type="range" id="leadMax" min="1" max="40" value="40" oninput="updateLeadLabel();render()"><div class="range-labels"><span>1 day</span><span id="leadLabel">≤ 40 days</span></div></div></div>
+</aside>
+
+<main class="main">
+  <div class="top-bar">
+    <h1>Materials</h1>
+    <div style="display:flex;gap:12px;align-items:center">
+      <input class="search-input" type="text" placeholder="Search materials..." id="searchInput" oninput="render()">
+      <div class="results-meta"><span id="count"></span></div>
+    </div>
+  </div>
+  <div class="grid" id="cards"></div>
+</main>
+</div>
+
+<script src="/data.js"></script>
+<script>
+const state={types:new Set(),fire:new Set(),finishes:new Set(),certs:new Set(),colorFamily:null};
+const colorMap={white:'#e8e4df',grey:'#9a9a96',brown:'#c8a97e',red:'#c4724e',black:'#3d3d3d',green:'#7ba3a0'};
+
+function initFilters(){
+  const tc=document.getElementById('typeChips');
+  allTypes.forEach(t=>{const c=document.createElement('button');c.className='chip';c.textContent=t;c.onclick=()=>{c.classList.toggle('active');state.types.has(t)?state.types.delete(t):state.types.add(t);render()};tc.appendChild(c)});
+  const fc=document.getElementById('fireChecks');
+  allFire.forEach(f=>{const l=document.createElement('label');l.innerHTML=`<input type="checkbox" onchange="state.fire.has('${f}')?state.fire.delete('${f}'):state.fire.add('${f}');render()"> ${f}`;fc.appendChild(l)});
+  const cs=document.getElementById('colorSwatches');
+  allColorFamily.forEach(c=>{const d=document.createElement('div');d.className='color-swatch';d.style.background=colorMap[c]||'#ccc';d.title=c;d.onclick=()=>{if(state.colorFamily===c){state.colorFamily=null;d.classList.remove('active')}else{document.querySelectorAll('.color-swatch').forEach(x=>x.classList.remove('active'));state.colorFamily=c;d.classList.add('active')}render()};cs.appendChild(d)});
+  const finC=document.getElementById('finishChips');
+  allFinish.forEach(f=>{const c=document.createElement('button');c.className='chip';c.textContent=f;c.onclick=()=>{c.classList.toggle('active');state.finishes.has(f)?state.finishes.delete(f):state.finishes.add(f);render()};finC.appendChild(c)});
+  const cc=document.getElementById('certChecks');
+  allCert.forEach(c=>{const l=document.createElement('label');l.innerHTML=`<input type="checkbox" onchange="state.certs.has('${c}')?state.certs.delete('${c}'):state.certs.add('${c}');render()"> ${c}`;cc.appendChild(l)});
+}
+
+function updateCo2Label(){document.getElementById('co2Label').textContent='≤ '+document.getElementById('co2Max').value+' kg/m²'}
+function updatePriceLabel(){document.getElementById('priceLabel').textContent='≤ €'+document.getElementById('priceMax').value}
+function updateLeadLabel(){document.getElementById('leadLabel').textContent='≤ '+document.getElementById('leadMax').value+' days'}
+
+function getFiltered(){
+  const co2Max=parseFloat(document.getElementById('co2Max').value);
+  const priceMax=parseFloat(document.getElementById('priceMax').value);
+  const leadMax=parseInt(document.getElementById('leadMax').value);
+  const indoor=document.getElementById('togIndoor').classList.contains('active');
+  const outdoor=document.getElementById('togOutdoor').classList.contains('active');
+  const search=(document.getElementById('searchInput')?.value||'').toLowerCase();
+  return materials.filter(m=>{
+    if(search&&!m.name.toLowerCase().includes(search)&&!m.type.includes(search)&&!m.brand.toLowerCase().includes(search))return false;
+    if(state.types.size&&!state.types.has(m.type))return false;
+    if(state.fire.size&&!state.fire.has(m.fire))return false;
+    if(m.co2>co2Max)return false;if(m.price>priceMax)return false;
+    if(state.colorFamily&&m.colorFamily!==state.colorFamily)return false;
+    if(state.finishes.size&&!state.finishes.has(m.finish))return false;
+    if(state.certs.size&&!m.cert.some(c=>state.certs.has(c)))return false;
+    if(!indoor&&m.use==='indoor')return false;if(!outdoor&&m.use==='outdoor')return false;
+    if(m.use==='both'&&!indoor&&!outdoor)return false;
+    if(m.leadDays>leadMax)return false;return true;
+  });
+}
+
+function render(){
+  const f=getFiltered();
+  document.getElementById('count').textContent=f.length+' materials';
+  const c=document.getElementById('cards');c.innerHTML='';
+  f.forEach(m=>{c.innerHTML+=`<div class="mat-card" onclick="location.href='/6-product?m=${encodeURIComponent(m.name)}'">
+    <div class="swatch-bar" style="background:${m.color}"><div class="badges">${m.cert.map(c=>`<span class="badge">${c}</span>`).join('')}</div></div>
+    <div class="card-body"><h3>${m.name}</h3><div class="type">${m.type} · ${m.finish}</div>
+    <div class="specs"><span>CO₂ ${m.co2}</span><span>Fire ${m.fire}</span><span>${m.use}</span></div>
+    <div class="bottom"><span class="price">€${m.price}</span><span class="lead">${m.leadDays}d lead</span></div></div></div>`});
+  if(!f.length)c.innerHTML='<p class="no-results">No materials match your filters.</p>';
+}
+
+function resetAll(){state.types.clear();state.fire.clear();state.finishes.clear();state.certs.clear();state.colorFamily=null;document.querySelectorAll('.chip,.color-swatch').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.checkbox-group input').forEach(e=>e.checked=false);document.getElementById('co2Max').value=20;document.getElementById('priceMax').value=350;document.getElementById('leadMax').value=40;document.getElementById('togIndoor').classList.add('active');document.getElementById('togOutdoor').classList.add('active');document.getElementById('searchInput').value='';updateCo2Label();updatePriceLabel();updateLeadLabel();render()}
+
+initFilters();render();
+</script>
+</body>
+</html>

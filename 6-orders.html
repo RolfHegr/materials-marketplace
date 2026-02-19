@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MaterialSource — Orders & Quotes</title>
+<link rel="stylesheet" href="/shared-6.css">
+<style>
+.account-layout{display:grid;grid-template-columns:220px 1fr;gap:32px}
+.sidebar a{display:block;padding:10px 16px;font-size:13px;color:#666;border-radius:6px;margin-bottom:2px}
+.sidebar a:hover{background:#fff;color:#1a1a1a}
+.sidebar a.active{background:#fff;color:#1a1a1a;font-weight:500;border:1px solid #e8e8e6}
+.tabs{display:flex;gap:4px;margin-bottom:24px}
+.tab{padding:8px 20px;font-size:13px;border-radius:6px;cursor:pointer;background:transparent;border:1px solid transparent;font-family:inherit;color:#666}
+.tab:hover{background:#fff}
+.tab.active{background:#fff;border-color:#e8e8e6;color:#1a1a1a;font-weight:500}
+.order-card{background:#fff;border:1px solid #e8e8e6;border-radius:8px;padding:20px;margin-bottom:12px}
+.order-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.order-header .id{font-size:14px;font-weight:500}
+.order-header .date{font-size:12px;color:#999}
+.order-meta{display:flex;gap:24px;font-size:12px;color:#777;margin-bottom:12px}
+.order-items{display:flex;gap:8px;margin-bottom:12px}
+.order-item-chip{display:flex;align-items:center;gap:8px;padding:6px 12px;background:#f5f5f3;border-radius:6px;font-size:12px}
+.order-item-chip .dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.order-footer{display:flex;justify-content:space-between;align-items:center}
+.order-footer .total{font-size:16px;font-weight:600}
+.status-badge{padding:4px 10px;border-radius:12px;font-size:11px;font-weight:500}
+.status-pending{background:#fff3e0;color:#e65100}
+.status-quoted{background:#e3f2fd;color:#1565c0}
+.status-accepted{background:#e8f5e9;color:#2e7d32}
+.status-delivered{background:#f5f5f3;color:#666}
+.progress-bar{height:4px;background:#e8e8e6;border-radius:2px;margin-top:12px;overflow:hidden}
+.progress-bar .fill{height:100%;border-radius:2px}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="/6-home" class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>MaterialSource</a>
+  <div class="nav-links"><a href="/6-materials">Materials</a><a href="/6-compare">Compare</a><a href="/6-cart">Quotes</a></div>
+  <div class="nav-right"><a href="/6-favorites">♡</a><a href="/6-account" class="avatar-sm">R</a></div>
+</nav>
+
+<div class="page-container wide">
+  <div class="account-layout">
+    <div class="sidebar">
+      <a href="/6-account">Profile</a>
+      <a href="/6-settings">Settings</a>
+      <a href="/6-favorites">Favorites</a>
+      <a href="/6-orders" class="active">Orders & Quotes</a>
+      <a href="/6-login" style="color:#c62828;margin-top:24px">Log Out</a>
+    </div>
+    <div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:20px">Orders & Quotes</h1>
+      <div class="tabs">
+        <button class="tab active">All</button>
+        <button class="tab">Pending</button>
+        <button class="tab">Quoted</button>
+        <button class="tab">Accepted</button>
+        <button class="tab">Delivered</button>
+      </div>
+
+      <div class="order-card">
+        <div class="order-header">
+          <span class="id">QR-2026-0042 — Barcode Tower B13</span>
+          <span class="date">Feb 18, 2026</span>
+        </div>
+        <div class="order-meta">
+          <span>3 materials</span><span>2 suppliers</span><span>Oslo, Norway</span>
+        </div>
+        <div class="order-items">
+          <div class="order-item-chip"><div class="dot" style="background:#e8e4df"></div>Carrara Marble × 120m²</div>
+          <div class="order-item-chip"><div class="dot" style="background:#c8a97e"></div>White Oak Plank × 85m²</div>
+          <div class="order-item-chip"><div class="dot" style="background:#a8b0b4"></div>Zinc Panel × 200m²</div>
+        </div>
+        <div class="order-footer">
+          <span class="total">€72,090</span>
+          <span class="status-badge status-pending">Pending Response</span>
+        </div>
+        <div class="progress-bar"><div class="fill" style="width:25%;background:#e65100"></div></div>
+      </div>
+
+      <div class="order-card">
+        <div class="order-header">
+          <span class="id">QR-2026-0038 — Bjørvika Residence</span>
+          <span class="date">Feb 10, 2026</span>
+        </div>
+        <div class="order-meta">
+          <span>2 materials</span><span>1 supplier</span><span>Oslo, Norway</span>
+        </div>
+        <div class="order-items">
+          <div class="order-item-chip"><div class="dot" style="background:#c4724e"></div>Terracotta Tile × 300m²</div>
+          <div class="order-item-chip"><div class="dot" style="background:#d4b896"></div>Cork Sheet × 150m²</div>
+        </div>
+        <div class="order-footer">
+          <span class="total">€22,200</span>
+          <span class="status-badge status-quoted">Quote Received</span>
+        </div>
+        <div class="progress-bar"><div class="fill" style="width:50%;background:#1565c0"></div></div>
+      </div>
+
+      <div class="order-card">
+        <div class="order-header">
+          <span class="id">QR-2026-0031 — Svolvær Cultural Center</span>
+          <span class="date">Jan 22, 2026</span>
+        </div>
+        <div class="order-meta">
+          <span>4 materials</span><span>3 suppliers</span><span>Svolvær, Norway</span>
+        </div>
+        <div class="order-items">
+          <div class="order-item-chip"><div class="dot" style="background:#5c5c5c"></div>Acoustic Felt × 400m²</div>
+          <div class="order-item-chip"><div class="dot" style="background:#c9b47f"></div>Bamboo Panel × 200m²</div>
+          <div class="order-item-chip"><div class="dot" style="background:#7ba3a0"></div>Recycled Glass × 80m²</div>
+          <div class="order-item-chip"><div class="dot" style="background:#3d3d3d"></div>Basalt Stone × 120m²</div>
+        </div>
+        <div class="order-footer">
+          <span class="total">€58,640</span>
+          <span class="status-badge status-accepted">Accepted</span>
+        </div>
+        <div class="progress-bar"><div class="fill" style="width:75%;background:#2e7d32"></div></div>
+      </div>
+
+      <div class="order-card">
+        <div class="order-header">
+          <span class="id">QR-2025-0127 — Aker Brygge Office</span>
+          <span class="date">Dec 5, 2025</span>
+        </div>
+        <div class="order-meta">
+          <span>2 materials</span><span>2 suppliers</span><span>Oslo, Norway</span>
+        </div>
+        <div class="order-items">
+          <div class="order-item-chip"><div class="dot" style="background:#a0b07a"></div>Linoleum Roll × 500m²</div>
+          <div class="order-item-chip"><div class="dot" style="background:#f0ece6"></div>Gypsum Board × 800m²</div>
+        </div>
+        <div class="order-footer">
+          <span class="total">€39,600</span>
+          <span class="status-badge status-delivered">Delivered</span>
+        </div>
+        <div class="progress-bar"><div class="fill" style="width:100%;background:#999"></div></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MaterialSource — Quote Request</title>
+<link rel="stylesheet" href="/shared-6.css">
+<style>
+.cart-layout{display:grid;grid-template-columns:1fr 360px;gap:32px;align-items:start}
+.cart-item{background:#fff;border:1px solid #e8e8e6;border-radius:8px;padding:16px;display:flex;gap:16px;margin-bottom:12px;align-items:center}
+.cart-item .swatch{width:56px;height:56px;border-radius:6px;flex-shrink:0}
+.cart-item .info{flex:1}
+.cart-item .info h3{font-size:14px;font-weight:500;margin-bottom:2px}
+.cart-item .info p{font-size:12px;color:#999}
+.cart-item .qty{display:flex;align-items:center;gap:8px}
+.cart-item .qty input{width:60px;padding:6px 8px;border:1px solid #ddd;border-radius:4px;text-align:center;font-family:inherit;font-size:13px}
+.cart-item .qty label{font-size:11px;color:#999}
+.cart-item .price{font-size:16px;font-weight:600;min-width:80px;text-align:right}
+.cart-item .remove{color:#999;cursor:pointer;font-size:18px;margin-left:12px}
+.cart-item .remove:hover{color:#c62828}
+.summary{background:#fff;border:1px solid #e8e8e6;border-radius:8px;padding:24px;position:sticky;top:80px}
+.summary h3{font-size:16px;font-weight:500;margin-bottom:20px}
+.summary-row{display:flex;justify-content:space-between;padding:8px 0;font-size:13px;color:#666}
+.summary-row.total{font-size:16px;font-weight:600;color:#1a1a1a;border-top:1px solid #e8e8e6;padding-top:16px;margin-top:8px}
+.summary .btn{width:100%;justify-content:center;margin-top:16px}
+.summary .note{font-size:11px;color:#999;margin-top:12px;line-height:1.5}
+.project-info{background:#fff;border:1px solid #e8e8e6;border-radius:8px;padding:20px;margin-bottom:20px}
+.project-info h3{font-size:14px;font-weight:500;margin-bottom:12px}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="/6-home" class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>MaterialSource</a>
+  <div class="nav-links"><a href="/6-materials">Materials</a><a href="/6-compare">Compare</a><a href="/6-cart" class="active">Quotes</a></div>
+  <div class="nav-right"><a href="/6-favorites">♡</a><a href="/6-account" class="avatar-sm">R</a></div>
+</nav>
+
+<div class="page-container wide">
+  <h1 style="font-size:22px;font-weight:500;margin-bottom:8px">Quote Request</h1>
+  <p style="font-size:13px;color:#999;margin-bottom:24px">Review your materials and submit a quote request to suppliers</p>
+
+  <div class="cart-layout">
+    <div>
+      <div class="project-info">
+        <h3>Project Details</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="input-group"><label>Project Name</label><input type="text" placeholder="e.g. Barcode Tower B13" value="Barcode Tower B13"></div>
+          <div class="input-group"><label>Delivery Location</label><input type="text" placeholder="City, country" value="Oslo, Norway"></div>
+        </div>
+        <div class="input-group"><label>Notes to Supplier</label><textarea placeholder="Any special requirements, timeline considerations...">Looking for samples first, then bulk order Q3 2026. Need fire documentation for building permit application.</textarea></div>
+      </div>
+
+      <div id="cartItems"></div>
+    </div>
+    <div class="summary">
+      <h3>Quote Summary</h3>
+      <div class="summary-row"><span>Materials</span><span id="itemCount"></span></div>
+      <div class="summary-row"><span>Estimated Total</span><span id="estTotal"></span></div>
+      <div class="summary-row"><span>Suppliers</span><span id="supplierCount"></span></div>
+      <div class="summary-row total"><span>Est. Budget</span><span id="budget"></span></div>
+      <button class="btn btn-primary btn-lg" onclick="alert('Quote request submitted! You will receive responses within 2-3 business days.')">Submit Quote Request</button>
+      <p class="note">This is a quote request, not a purchase. Suppliers will respond with final pricing, availability, and delivery terms within 2–3 business days.</p>
+    </div>
+  </div>
+</div>
+
+<script src="/data.js"></script>
+<script>
+const cartMats=[
+  {...materials[0],qty:120},{...materials[2],qty:85},{...materials[5],qty:200}
+];
+const ci=document.getElementById('cartItems');
+cartMats.forEach((m,i)=>{ci.innerHTML+=`<div class="cart-item" id="item-${i}">
+  <div class="swatch" style="background:${m.color}"></div>
+  <div class="info"><h3>${m.name}</h3><p>${m.brand} · ${m.type} · ${m.finish}</p></div>
+  <div class="qty"><label>m²</label><input type="number" value="${m.qty}" min="1" onchange="updateSummary()"></div>
+  <div class="price">€${(m.price*m.qty).toLocaleString()}</div>
+  <span class="remove" onclick="this.closest('.cart-item').remove();updateSummary()">×</span>
+</div>`});
+
+function updateSummary(){
+  const items=document.querySelectorAll('.cart-item');
+  let total=0;
+  items.forEach((el,i)=>{
+    if(cartMats[i]){
+      const qty=parseInt(el.querySelector('input').value)||0;
+      const sub=cartMats[i].price*qty;
+      el.querySelector('.price').textContent='€'+sub.toLocaleString();
+      total+=sub;
+    }
+  });
+  document.getElementById('itemCount').textContent=items.length+' materials';
+  document.getElementById('estTotal').textContent='€'+total.toLocaleString();
+  const brands=new Set(cartMats.slice(0,items.length).map(m=>m.brand));
+  document.getElementById('supplierCount').textContent=brands.size+' suppliers';
+  document.getElementById('budget').textContent='€'+total.toLocaleString();
+}
+updateSummary();
+</script>
+</body>
+</html>

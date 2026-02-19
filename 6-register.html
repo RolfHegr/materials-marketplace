@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MaterialSource — Sign Up</title>
+<link rel="stylesheet" href="/shared-6.css">
+<style>
+.auth-page{display:flex;align-items:center;justify-content:center;min-height:calc(100vh - 56px);padding:40px 20px}
+.auth-card{background:#fff;border:1px solid #e8e8e6;border-radius:12px;padding:48px 40px;width:100%;max-width:440px}
+.auth-card .logo-mark{text-align:center;margin-bottom:32px}
+.auth-card .logo-mark h2{font-size:20px;font-weight:500;margin-top:8px}
+.auth-card .logo-mark p{font-size:13px;color:#999;margin-top:4px}
+.auth-card .btn{width:100%;justify-content:center}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.footer-text{text-align:center;font-size:12px;color:#999;margin-top:24px}
+.footer-text a{color:#1a1a1a;font-weight:500}
+.terms{font-size:11px;color:#999;text-align:center;margin-top:16px;line-height:1.5}
+.terms a{color:#666}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="/6-home" class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>MaterialSource</a>
+  <div class="nav-links"><a href="/6-materials">Materials</a><a href="/6-compare">Compare</a><a href="/6-cart">Quotes</a></div>
+  <div class="nav-right"></div>
+</nav>
+
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="logo-mark">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      <h2>Create your account</h2>
+      <p>Join 1,200+ architecture firms on MaterialSource</p>
+    </div>
+    <div class="row">
+      <div class="input-group"><label>First Name</label><input type="text" placeholder="Rolf"></div>
+      <div class="input-group"><label>Last Name</label><input type="text" placeholder="Hegre"></div>
+    </div>
+    <div class="input-group"><label>Work Email</label><input type="email" placeholder="rolf@snohetta.com"></div>
+    <div class="input-group"><label>Company / Firm</label><input type="text" placeholder="Snøhetta"></div>
+    <div class="input-group">
+      <label>Role</label>
+      <select>
+        <option value="" disabled selected>Select your role</option>
+        <option>Architect</option>
+        <option>Interior Designer</option>
+        <option>Landscape Architect</option>
+        <option>Contractor / Builder</option>
+        <option>Supplier / Manufacturer</option>
+        <option>Developer / Client</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="input-group"><label>Password</label><input type="password" placeholder="Min. 8 characters"></div>
+    <button class="btn btn-primary btn-lg" onclick="location.href='/6-account'" style="margin-top:8px">Create Account</button>
+    <p class="terms">By signing up, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
+    <div class="footer-text">Already have an account? <a href="/6-login">Log in</a></div>
+  </div>
+</div>
+</body>
+</html>

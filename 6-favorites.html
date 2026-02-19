@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MaterialSource — Favorites</title>
+<link rel="stylesheet" href="/shared-6.css">
+<style>
+.account-layout{display:grid;grid-template-columns:220px 1fr;gap:32px}
+.sidebar a{display:block;padding:10px 16px;font-size:13px;color:#666;border-radius:6px;margin-bottom:2px}
+.sidebar a:hover{background:#fff;color:#1a1a1a}
+.sidebar a.active{background:#fff;color:#1a1a1a;font-weight:500;border:1px solid #e8e8e6}
+.top-actions{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:12px}
+</style>
+</head>
+<body>
+<nav class="topnav">
+  <a href="/6-home" class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>MaterialSource</a>
+  <div class="nav-links"><a href="/6-materials">Materials</a><a href="/6-compare">Compare</a><a href="/6-cart">Quotes</a></div>
+  <div class="nav-right"><a href="/6-favorites" style="color:#fff">♡</a><a href="/6-account" class="avatar-sm">R</a></div>
+</nav>
+
+<div class="page-container wide">
+  <div class="account-layout">
+    <div class="sidebar">
+      <a href="/6-account">Profile</a>
+      <a href="/6-settings">Settings</a>
+      <a href="/6-favorites" class="active">Favorites</a>
+      <a href="/6-orders">Orders & Quotes</a>
+      <a href="/6-login" style="color:#c62828;margin-top:24px">Log Out</a>
+    </div>
+    <div>
+      <div class="top-actions">
+        <div>
+          <h1 style="font-size:22px;font-weight:500">Saved Materials</h1>
+          <p style="font-size:13px;color:#999;margin-top:4px" id="favCount"></p>
+        </div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-secondary btn-sm">Compare Selected</button>
+          <button class="btn btn-primary btn-sm">Add All to Quote</button>
+        </div>
+      </div>
+      <div class="grid" id="favGrid"></div>
+    </div>
+  </div>
+</div>
+
+<script src="/data.js"></script>
+<script>
+const favs = materials.filter((_,i)=>[0,2,4,6,8,10].includes(i));
+document.getElementById('favCount').textContent=favs.length+' saved materials';
+const g=document.getElementById('favGrid');
+favs.forEach(m=>{g.innerHTML+=`<div class="mat-card" onclick="location.href='/6-product?m=${encodeURIComponent(m.name)}'">
+  <div class="swatch-bar" style="background:${m.color}">
+    <button class="fav-btn liked" onclick="event.stopPropagation();this.closest('.mat-card').remove()" style="position:absolute;top:8px;left:8px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9);border:none;cursor:pointer;color:#e74c3c;font-size:14px">♥</button>
+    <div class="badges">${m.cert.map(c=>`<span class="badge">${c}</span>`).join('')}</div>
+  </div>
+  <div class="card-body"><h3>${m.name}</h3><div class="type">${m.type} · ${m.finish}</div>
+  <div class="specs"><span>CO₂ ${m.co2}</span><span>Fire ${m.fire}</span></div>
+  <div class="bottom"><span class="price">€${m.price}</span><span class="lead">${m.leadDays}d lead</span></div></div></div>`});
+</script>
+</body>
+</html>

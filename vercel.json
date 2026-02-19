@@ -10,6 +10,17 @@
     { "source": "/8", "destination": "/8.html" },
     { "source": "/9", "destination": "/9.html" },
     { "source": "/10", "destination": "/10.html" },
+    { "source": "/6-home", "destination": "/6-home.html" },
+    { "source": "/6-materials", "destination": "/6-materials.html" },
+    { "source": "/6-product", "destination": "/6-product.html" },
+    { "source": "/6-login", "destination": "/6-login.html" },
+    { "source": "/6-register", "destination": "/6-register.html" },
+    { "source": "/6-account", "destination": "/6-account.html" },
+    { "source": "/6-settings", "destination": "/6-settings.html" },
+    { "source": "/6-favorites", "destination": "/6-favorites.html" },
+    { "source": "/6-compare", "destination": "/6-compare.html" },
+    { "source": "/6-cart", "destination": "/6-cart.html" },
+    { "source": "/6-orders", "destination": "/6-orders.html" },
     { "source": "/", "destination": "/1.html" }
   ]
 }
